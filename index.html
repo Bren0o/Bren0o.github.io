@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- HEADER DA PÁGINA WEB -->
+    <!-- HEADER DA PÁGINA WEB (VISÍVEL) -->
     <header id="header-pagina-web">
         <h1>Breno Caldas</h1>
         <p>Análise e Desenvolvimento de Sistemas | Assessor de Gestão</p>
@@ -16,7 +16,7 @@
         </button>
     </header>
 
-    <!-- CORPO PRINCIPAL DA PÁGINA WEB (FUNDO BRANCO) -->
+    <!-- CORPO PRINCIPAL DA PÁGINA WEB -->
     <main id="main-pagina-web">
         <section id="sobre-mim">
             <h2>Sobre Mim</h2>
@@ -74,12 +74,13 @@
     </main>
 
     <!-- ELEMENTO OCULTO PARA CAPTURA DO PDF -->
-    <div id="pdf-capture-area" style="position: absolute; left: -9999px; top: -9999px; width: 900px;"> <!-- Largura definida aqui -->
-        <div class="header-para-pdf"> <!-- Header do PDF -->
+    <div id="pdf-capture-area" style="position: absolute; left: -9999px; top: -9999px; width: 900px; padding: 0;">
+        <div class="header-para-pdf">
             <h1>Breno Caldas</h1>
             <p>Análise e Desenvolvimento de Sistemas | Assessor de Gestão</p>
         </div>
-        <div id="main-content-pdf-copy"> <!-- Conteúdo do main será clonado aqui -->
+        <div id="main-content-pdf-copy">
+            <!-- Conteúdo será clonado aqui -->
         </div>
     </div>
 
