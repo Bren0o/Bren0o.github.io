@@ -1,10 +1,10 @@
 /* CORES */
 :root {
     --cor-azul-escuro: #1E2F4B;
-    --cor-branco-creme-pagina: #E6E6E6;
-    --cor-branco-conteudo: #FFFFFF;
+    --cor-branco-creme-pagina: #E6E6E6; /* Fundo da página web */
+    --cor-branco-conteudo: #FFFFFF;     /* Fundo do conteúdo principal na web e no PDF */
     --cor-texto-claro: white;
-    --cor-texto-escuro-padrao: #333;
+    --cor-texto-escuro-padrao: #333; /* Para parágrafos normais */
 }
 
 body {
@@ -12,7 +12,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: var(--cor-branco-creme-pagina); /* FUNDO GERAL CREME */
+    background-color: var(--cor-branco-creme-pagina); /* PÁGINA WEB COM FUNDO CREME */
     color: var(--cor-texto-escuro-padrao);
     display: flex;
     flex-direction: column;
@@ -25,21 +25,23 @@ header#header-pagina-web {
     color: var(--cor-texto-claro);
     padding: 1.5rem 20px;
     text-align: center;
-    margin: 20px auto 0 auto; /* Espaço creme acima, centralizado */
+    margin: 20px auto 0 auto;
     max-width: 900px;
     box-sizing: border-box;
     border-radius: 8px 8px 0 0;
 }
 header#header-pagina-web h1 { margin: 0; font-size: 2.8rem; }
 header#header-pagina-web p { font-size: 1.3rem; margin-top: 0.5rem; }
-.botao-download-js { display: inline-block; background-color: transparent; color: var(--cor-texto-claro); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: 2px solid var(--cor-texto-claro); cursor: pointer; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; font-size: 1rem; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+.botao-download-js {
+    display: inline-block; background-color: transparent; color: var(--cor-texto-claro); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: 2px solid var(--cor-texto-claro); cursor: pointer; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; font-size: 1rem; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
 .botao-download-js:hover { background-color: var(--cor-texto-claro); color: var(--cor-azul-escuro); border-color: var(--cor-texto-claro); }
 
 /* MAIN DA PÁGINA WEB */
 main#main-pagina-web {
     padding: 25px;
     max-width: 900px;
-    margin: 0 auto 30px auto; /* Encosta no header, centralizado, espaço creme abaixo */
+    margin: 0 auto 30px auto;
     background-color: var(--cor-branco-conteudo);
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 0 0 8px 8px;
@@ -48,79 +50,43 @@ main#main-pagina-web {
 }
 
 /* --- ESTILOS PARA A ÁREA DE CAPTURA DO PDF (dentro de #pdf-capture-area) --- */
-/* #pdf-capture-area em si não precisa de muito estilo visual, pois é um container lógico.
-   A largura será definida pelo JS. O fundo do PDF virá da opção backgroundColor do html2canvas. */
 #pdf-capture-area {
-    /* Apenas para garantir que os filhos possam ter o padding */
-    padding-top: 20px; /* Espaço branco ACIMA do header azul NO PDF */
-    padding-bottom: 40px; /* Espaço branco ABAIXO do main-content-pdf-copy NO PDF */
-    background-color: var(--cor-branco-conteudo); /* Fundo branco para o container de captura */
+    background-color: var(--cor-branco-conteudo); /* FUNDO DO PDF SERÁ BRANCO */
+    padding: 0; /* Sem padding aqui, a largura é definida pelo JS e filhos preenchem */
+    /* A largura de 900px é definida via JS no elemento #pdf-capture-area antes da captura */
 }
 
-#pdf-capture-area .header-para-pdf {
+#pdf-capture-area .header-para-pdf { /* Header do PDF */
     background: var(--cor-azul-escuro);
     color: var(--cor-texto-claro);
     padding: 1.5rem 20px;
     text-align: center;
-    margin: 0 0 20px 0; /* Margem inferior de 20px para separar do main-content-pdf-copy */
-    /* A largura será 100% do pai (#pdf-capture-area), que terá 900px. */
+    /* margin-bottom: 20px;  REMOVIDO - O espaço virá do padding-top do main abaixo */
     border-radius: 8px 8px 0 0;
 }
 #pdf-capture-area .header-para-pdf h1 { margin: 0; font-size: 2.8rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 #pdf-capture-area .header-para-pdf p { font-size: 1.3rem; margin-top: 0.5rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 
 #pdf-capture-area #main-content-pdf-copy {
-    padding: 25px;
-    background-color: var(--cor-branco-conteudo); /* Garante fundo branco para o conteúdo */
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra sutil se desejar no PDF */
-    border-radius: 0 0 8px 8px; /* Completa o visual do card */
-    /* A largura será 100% do pai (#pdf-capture-area) */
+    padding: 25px; /* Padding interno do conteúdo */
+    padding-top: 45px; /* AUMENTADO: 25px originais + 20px para o espaço (25+20=45) */
+    background-color: var(--cor-branco-conteudo);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 0 0 8px 8px;
 }
 
 /* Estilos das seções, títulos, etc. DENTRO de #main-pagina-web E #pdf-capture-area #main-content-pdf-copy */
-/* Usamos seletores mais genéricos para que se apliquem a ambos os contextos */
 section { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px dashed #cccccc; }
 section:last-child { border-bottom: none; }
-
-/* Títulos H2 das seções */
 h2 { color: var(--cor-azul-escuro); border-bottom: 3px solid var(--cor-azul-escuro); padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 2rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
-
-/* Cursos Complementares H3 */
-h3 { /* Estilo para "Cursos Complementares" */
-    font-size: 1.2rem; /* Um pouco menor que H2 */
-    color: var(--cor-azul-escuro);
-    margin-top: 1.5rem; /* Espaço acima */
-    margin-bottom: 0.8rem;
-    font-weight: bold;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
-
+h3 { font-size: 1.2rem; color: var(--cor-azul-escuro); margin-top: 1.5rem; margin-bottom: 0.8rem; font-weight: bold; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 .job { margin-bottom: 1.8rem; }
-.job h3 { /* Títulos dos cargos */
-    margin-bottom: 0.3rem;
-    color: var(--cor-azul-escuro);
-    font-size: 1.4rem; /* Mesmo tamanho do h3 de Cursos Complementares para consistência */
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-    /* Removendo o "font-weight: bold" daqui se o h3 geral já tem */
-}
+.job h3 { margin-bottom: 0.3rem; color: var(--cor-azul-escuro); font-size: 1.4rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 .job p { margin-top: 0.4rem; margin-bottom: 0.4rem; color: #555; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
-
 ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
-#sobre-mim ul li { font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; } /* Garante a fonte */
-
-/* ESTILO RESTAURADO DAS HABILIDADES */
-#habilidades ul {
-    list-style: none; /* Remove bullets padrão para este ul específico */
-    padding-left: 0;
-}
-#habilidades ul li {
-    background-color: #f0f0f0; /* Fundo creme claro para cada item */
-    margin-bottom: 8px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    border-left: 4px solid var(--cor-azul-escuro); /* Detalhe azul à esquerda */
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
+#sobre-mim ul li{ font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
+#habilidades ul { list-style: none; padding-left: 0; }
+#habilidades ul li { background-color: #f0f0f0; margin-bottom: 8px; padding: 8px 12px; border-radius: 5px; border-left: 4px solid var(--cor-azul-escuro); font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 
 /* RODAPÉ COMBINADO */
 .rodape-combinado { background: var(--cor-azul-escuro); color: var(--cor-texto-claro); width: 100%; margin-top: auto; }
@@ -135,28 +101,21 @@ ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkb
 /* Media Queries */
 @media (max-width: 768px) {
     header#header-pagina-web,
-    main#main-pagina-web {
-        max-width: calc(100% - 20px);
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 0;
-    }
+    main#main-pagina-web { max-width: calc(100% - 20px); margin-left: auto; margin-right: auto; border-radius: 0; }
     header#header-pagina-web { margin-top: 10px; margin-bottom: 0; }
     main#main-pagina-web { margin-bottom: 20px; }
     header#header-pagina-web h1 { font-size: 2.2rem; }
     header#header-pagina-web p { font-size: 1.1rem; }
 
-    /* A área de captura do PDF já terá sua largura definida pelo JS (900px),
-       então não precisa de @media query específico para #pdf-capture-area em si,
-       mas os elementos DENTRO dela podem precisar se adaptar se a largura de captura for menor.
-       No entanto, estamos forçando 900px. */
-    #pdf-capture-area { padding: 10px 0 40px 0; } /* Padding vertical menor para a captura */
-    #pdf-capture-area .header-para-pdf { margin-bottom: 15px; }
-
+    /* Para o conteúdo DENTRO da área de captura do PDF em telas menores */
+    /* A largura da #pdf-capture-area é definida pelo JS (900px),
+       então seus filhos diretos não precisam de max-width aqui, eles ocuparão 100% do pai. */
+    #pdf-capture-area .header-para-pdf { margin-bottom: 15px; /* Espaço menor no PDF em telas "simuladas" menores */ }
+    #pdf-capture-area #main-content-pdf-copy { padding-top: 35px; /* (15px originais + 20px de espaço) */ }
+    #pdf-capture-area { /* Não precisa de media query, JS define largura */ }
 
     .rodape-combinado nav.linktree ul li { display: block; margin: 0.8rem 0; }
     .rodape-combinado nav.linktree ul li a { display: block; }
-
-    h2, #pdf-capture-area h2 { font-size: 1.8rem; }
-    .job h3, #pdf-capture-area .job h3 { font-size: 1.3rem; }
+    h2, #pdf-capture-area h2 { font-size: 1.8rem; } /* Estilo para h2 no PDF também */
+    .job h3, #pdf-capture-area .job h3 { font-size: 1.3rem; } /* Estilo para job h3 no PDF também */
 }
