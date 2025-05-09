@@ -1,4 +1,4 @@
-// script.js (SEM MUDANÇAS RECENTES NECESSÁRIAS PARA ESTE PROBLEMA ESPECÍFICO DE ALINHAMENTO)
+// script.js
 
 document.addEventListener('DOMContentLoaded', function() {
     const botaoGerar = document.getElementById('botaoGerarPdf');
@@ -10,42 +10,38 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function gerarPDF() {
-    const elementoCurriculo = document.getElementById('conteudo-curriculo');
-    const headerParaPdf = document.querySelector('.header-para-pdf');
+    const elementoParaPdf = document.getElementById('pagina-container'); // Alvo da captura!
 
-    if (!elementoCurriculo) {
-        console.error("Elemento com ID 'conteudo-curriculo' não encontrado.");
-        alert("Erro: Não foi possível encontrar o conteúdo do currículo para gerar o PDF.");
+    if (!elementoParaPdf) {
+        console.error("Elemento com ID 'pagina-container' não encontrado.");
+        alert("Erro: Não foi possível encontrar o conteúdo principal para gerar o PDF.");
         return;
     }
-    if (!headerParaPdf) {
-        console.error("Elemento com classe '.header-para-pdf' não encontrado. O título não aparecerá no PDF.");
-    }
 
-    // Tornar o header do PDF visível para a captura
-    if (headerParaPdf) {
-        headerParaPdf.classList.remove('oculto-na-pagina');
-        headerParaPdf.classList.add('mostrar-para-pdf');
-    }
+    // Adiciona uma classe ao body para ocultar o botão de download durante a captura
+    document.body.classList.add('gerando-pdf');
 
     const options = {
         scale: 2,
         useCORS: true,
         logging: true,
-        backgroundColor: '#E6E6E6',
-        // Permitir que o html2canvas determine as dimensões do #conteudo-curriculo
-        // que agora tem o headerParaPdf visível e ambos os filhos (header e main)
-        // são dimensionados por max-width e margin: auto.
+        backgroundColor: '#E6E6E6', // Fundo do canvas
+        // Permitir que html2canvas tente determinar as dimensões de #pagina-container
+        // É crucial que #pagina-container e seus filhos (#header-pagina-web e #main-content)
+        // estejam dimensionados corretamente com CSS para que a captura fique boa.
+        // As opções width/height podem ser usadas se a detecção automática falhar.
+        // width: elementoParaPdf.scrollWidth,
+        // height: elementoParaPdf.scrollHeight,
+        // windowWidth: elementoParaPdf.scrollWidth,
+        // windowHeight: elementoParaPdf.scrollHeight
     };
 
-    html2canvas(elementoCurriculo, options).then(canvas => {
-        if (headerParaPdf) {
-            headerParaPdf.classList.remove('mostrar-para-pdf');
-            headerParaPdf.classList.add('oculto-na-pagina');
-        }
+    html2canvas(elementoParaPdf, options).then(canvas => {
+        // Remove a classe após a captura
+        document.body.classList.remove('gerando-pdf');
 
         const imgData = canvas.toDataURL('image/png');
-        const { jsPDF } = window.jspdf;
+        const { jsPDF } = window.jspdf; // Certifique-se que jsPDF está carregado
         const pdf = new jsPDF({
             orientation: 'portrait',
             unit: 'pt',
@@ -75,10 +71,8 @@ function gerarPDF() {
         pdf.save('Curriculo_Breno_Caldas.pdf');
 
     }).catch(error => {
-        if (headerParaPdf) {
-            headerParaPdf.classList.remove('mostrar-para-pdf');
-            headerParaPdf.classList.add('oculto-na-pagina');
-        }
+        // Remove a classe em caso de erro também
+        document.body.classList.remove('gerando-pdf');
         console.error("Erro ao gerar PDF com html2canvas:", error);
         alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
     });
