@@ -13,7 +13,7 @@ function gerarPDF() {
     const areaDeCaptura = document.getElementById('pdf-capture-area');
     const mainOriginal = document.getElementById('main-pagina-web');
     const copiaMainParaPdf = document.getElementById('main-content-pdf-copy');
-    // const headerParaPdfOculto = document.querySelector('#pdf-capture-area .header-para-pdf'); // Já está no HTML da área de captura
+    // O .header-para-pdf já está dentro da areaDeCaptura no HTML
 
     if (!areaDeCaptura || !mainOriginal || !copiaMainParaPdf) {
         console.error("Elementos para PDF não encontrados.");
@@ -21,32 +21,33 @@ function gerarPDF() {
         return;
     }
 
-    // 1. Clonar conteúdo do main visível para a área de captura
+    // 1. Clonar conteúdo
     copiaMainParaPdf.innerHTML = mainOriginal.innerHTML;
 
-    // 2. Preparar área de captura (já está fora da tela, mas garantimos display block)
+    // 2. Tornar área de captura visível (já está fora da tela pelo CSS inline)
     areaDeCaptura.style.display = 'block';
-    // A largura de 900px já está inline no HTML, mas podemos reforçar:
-    // areaDeCaptura.style.width = '900px'; // Garante a largura do container de captura
+
+    // A largura de 900px está definida inline no HTML para #pdf-capture-area
+    // Se precisar reforçar ou mudar:
+    // areaDeCaptura.style.width = '900px';
 
     const options = {
-        scale: 1.5, // Tentar 1.5 para equilíbrio qualidade/tamanho da imagem
+        scale: 1.5, // Tentar com 1.5
         useCORS: true,
-        logging: false, // Desabilitar logging excessivo se tudo estiver ok
-        backgroundColor: '#FFFFFF', // FUNDO DO CANVAS GERADO PELO HTML2CANVAS SERÁ BRANCO
-        width: 900, // Largura da captura
-        windowWidth: 900, // Simula janela desta largura
-        // A altura será baseada no conteúdo do areaDeCaptura
+        logging: false,
+        backgroundColor: '#FFFFFF', // FUNDO DO CANVAS SERÁ BRANCO
+        width: 900, // Força a largura da área de renderização do html2canvas
+        windowWidth: 900,
+        // A altura será baseada no scrollHeight da areaDeCaptura
         height: areaDeCaptura.scrollHeight,
         windowHeight: areaDeCaptura.scrollHeight,
-        x: 0, // Captura a partir da borda esquerda da areaDeCaptura
+        x: 0,
         removeContainer: false
     };
 
     html2canvas(areaDeCaptura, options).then(canvas => {
-        // 3. Limpar e ocultar área de captura
-        copiaMainParaPdf.innerHTML = '';
-        areaDeCaptura.style.display = 'none';
+        copiaMainParaPdf.innerHTML = ''; // Limpa
+        areaDeCaptura.style.display = 'none'; // Oculta novamente
 
         const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
@@ -60,20 +61,19 @@ function gerarPDF() {
         const pdfPageHeight = pdf.internal.pageSize.getHeight();
         const imgProps = pdf.getImageProperties(imgData);
 
-        let finalImgWidth = pdfWidth;
-        let finalImgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        let finalImgWidth = pdfWidth; // Imagem ocupa a largura da página PDF
+        let finalImgHeight = (imgProps.height * pdfWidth) / imgProps.width; // Mantém proporção
 
-        // Se a imagem, após ser escalada para a largura do PDF,
-        // ainda for mais alta que a página do PDF, redimensiona para caber na altura.
+        // Se, após escalar para a largura do PDF, a imagem for mais alta que UMA página PDF,
+        // então redimensiona para caber na altura de UMA página, ajustando a largura.
         if (finalImgHeight > pdfPageHeight) {
-            console.warn("Conteúdo capturado é mais alto que uma página A4. Redimensionando para caber na altura.");
+            console.warn("Conteúdo excede uma página, redimensionando para caber na altura de uma página.");
             finalImgWidth = (imgProps.width * pdfPageHeight) / imgProps.height;
             finalImgHeight = pdfPageHeight;
         }
 
-        // Centralizar a imagem na página do PDF
-        const offsetX = (pdfWidth - finalImgWidth) / 2;
-        const offsetY = 0; // Começa do topo
+        const offsetX = (pdfWidth - finalImgWidth) / 2; // Centraliza se ficou mais estreita
+        const offsetY = 0;
 
         pdf.addImage(imgData, 'PNG', offsetX, offsetY, finalImgWidth, finalImgHeight);
         pdf.save('Curriculo_Breno_Caldas.pdf');
@@ -81,7 +81,7 @@ function gerarPDF() {
     }).catch(error => {
         copiaMainParaPdf.innerHTML = '';
         areaDeCaptura.style.display = 'none';
-        console.error("Erro ao gerar PDF com html2canvas:", error);
-        alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
+        console.error("Erro ao gerar PDF:", error);
+        alert("Ocorreu um erro ao gerar o PDF. Verifique o console.");
     });
 }
