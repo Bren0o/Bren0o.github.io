@@ -7,20 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Container principal para o conteúdo da página (exceto linktree e footer) -->
     <div id="pagina-container">
-
-        <!-- Header da página web - AGORA DENTRO DO CONTAINER DO PDF -->
         <header id="header-pagina-web">
             <h1>Breno Caldas</h1>
             <p>Análise e Desenvolvimento de Sistemas | Assessor de Gestão</p>
-            <!-- O botão de download será oculto no PDF via CSS -->
             <button id="botaoGerarPdf" class="botao-download-js">
                 Baixar Currículo (PDF)
             </button>
         </header>
 
-        <!-- Conteúdo principal do currículo -->
         <main id="main-content">
             <section id="sobre-mim">
                 <h2>Sobre Mim</h2>
@@ -79,21 +74,22 @@
                 </ul>
             </section>
         </main>
-
     </div> <!-- Fim do #pagina-container -->
 
-    <!-- Meus Links movido para antes do footer -->
-    <nav class="linktree">
-        <h2>Meus Links</h2>
-        <ul>
-            <li><a href="mailto:breno.caldas2001@gmail.com" target="_blank">📧 Email</a></li>
-            <li><a href="https://wa.me/5511945841457" target="_blank">💬 WhatsApp</a></li>
-        </ul>
-    </nav>
+    <!-- Bloco inferior azul -->
+    <div class="bloco-inferior-azul">
+        <nav class="linktree">
+            <h2>Meus Links</h2>
+            <ul>
+                <li><a href="mailto:breno.caldas2001@gmail.com" target="_blank">📧 Email</a></li>
+                <li><a href="https://wa.me/5511945841457" target="_blank">💬 WhatsApp</a></li>
+            </ul>
+        </nav>
+        <footer>
+            <p>© 2024 Breno Caldas. Todos os direitos reservados.</p>
+        </footer>
+    </div> <!-- Fim do .bloco-inferior-azul -->
 
-    <footer>
-        <p>© 2024 Breno Caldas. Todos os direitos reservados.</p>
-    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
