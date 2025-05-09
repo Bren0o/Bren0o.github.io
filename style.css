@@ -1,10 +1,15 @@
-/* ... (cabeçalho de cores e body como antes) ... */
+/*
+COR_AZUL_ESCURO_TITULO = '#1E2F4B'
+COR_BRANCO_CREME_FUNDO = '#E6E6E6'
+COR_DEMAIS_INFOS = 'white'
+*/
+
 body {
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #E6E6E6;
+    background-color: #E6E6E6; /* Fundo creme da página web */
     color: #333;
     display: flex;
     flex-direction: column;
@@ -17,7 +22,6 @@ header#header-pagina-web-visivel {
     color: white;
     padding: 1.5rem 0;
     text-align: center;
-    /* Este header não precisa de max-width fixo, pode ocupar a largura da tela */
 }
 
 header#header-pagina-web-visivel h1 {
@@ -33,11 +37,12 @@ header#header-pagina-web-visivel p {
 /* Container que será efetivamente capturado para o PDF */
 #pagina-container-para-pdf {
     background-color: #E6E6E6; /* Fundo creme para a área do PDF */
-    padding-top: 20px;
-    padding-bottom: 60px; /* AUMENTADO para mais espaço creme no final do PDF */
-    width: 100%;
+    padding-top: 20px;    /* Espaço no topo do conteúdo do PDF */
+    padding-bottom: 100px; /* AUMENTADO SIGNIFICATIVAMENTE para mais espaço creme no final do PDF. Ajuste conforme necessário. */
+    width: 100%;          /* Ocupa a largura disponível para que os filhos possam se centralizar */
     box-sizing: border-box;
-    /* Este container não precisa de flex-grow, pois não é filho direto do body flex */
+    /* flex-grow: 1; // Removido, pois o body já é flex e o container não é filho direto para usar flex-grow efetivamente para altura.
+                      A altura será determinada pelo conteúdo + paddings. */
 }
 
 /* Header que será incluído DENTRO do PDF */
@@ -54,12 +59,12 @@ header#header-pagina-web-visivel p {
 
 .header-conteudo-pdf h1 {
     margin: 0;
-    font-size: 2.8rem; /* Mantendo o tamanho original */
+    font-size: 2.8rem;
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
 }
 
 .header-conteudo-pdf p {
-    font-size: 1.3rem; /* Mantendo o tamanho original */
+    font-size: 1.3rem;
     margin-top: 0.5rem;
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
 }
@@ -67,27 +72,54 @@ header#header-pagina-web-visivel p {
 main#main-content {
     padding: 25px;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 0 auto; /* Centralizado, sem margem superior (vem do header-conteudo-pdf) */
     background-color: white;
     box-shadow: 0 0 15px rgba(0,0,0,0.15);
     border-radius: 0 0 8px 8px;
     box-sizing: border-box;
 }
 
-/* ... (estilos para .bloco-inferior-azul, nav.linktree, footer, seções, etc. como na ÚLTIMA versão que te passei) ... */
-/* Vou copiar o restante para garantir completude */
+/* Bloco inferior azul contínuo */
+.bloco-inferior-azul {
+    background: #1E2F4B;
+    color: white;
+    width: 100%;
+    margin-top: auto; /* Empurra este bloco para o final da página se o conteúdo acima for pouco */
+}
 
-.bloco-inferior-azul { background: #1E2F4B; color: white; width: 100%; }
-nav.linktree { padding: 1.5rem; text-align: center; }
-nav.linktree h2 { margin-top: 0; margin-bottom: 1rem; font-size: 1.8rem; color: white; }
+nav.linktree {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+nav.linktree h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: white;
+}
+
 nav.linktree ul { list-style: none; padding: 0; }
 nav.linktree ul li { display: inline-block; margin: 0.5rem; }
 nav.linktree ul li a,
 nav.linktree ul li a:link,
-nav.linktree ul li a:visited { color: white; text-decoration: none; padding: 0.7rem 1.5rem; border: 2px solid white; border-radius: 8px; transition: background-color 0.3s ease, color 0.3s ease; font-weight: bold; }
+nav.linktree ul li a:visited {
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+}
 nav.linktree ul li a:hover,
 nav.linktree ul li a:focus { background-color: white; color: #1E2F4B; }
-footer { text-align: center; padding: 1rem 1.5rem 1.5rem 1.5rem; }
+
+footer {
+    text-align: center;
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+}
+
 section { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px dashed #cccccc; }
 section:last-child { border-bottom: none; }
 h2 { color: #1E2F4B; border-bottom: 3px solid #1E2F4B; padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 2rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
@@ -115,28 +147,26 @@ ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkb
 }
 .botao-download-js:hover { background-color: white; color: #1E2F4B; border: 2px solid white; }
 
-/* Removida a classe .gerando-pdf #botaoGerarPdf, pois o botão agora está fora da área de captura */
-
+/* Ajustes para telas menores */
 @media (max-width: 768px) {
-    header#header-pagina-web-visivel { /* Atualizado o ID do header */
+    header#header-pagina-web-visivel {
         margin-top: 10px;
         border-radius: 0;
-        /* max-width e margins laterais não são necessários se ele ocupa a largura total */
     }
     header#header-pagina-web-visivel h1 { font-size: 2.2rem; }
     header#header-pagina-web-visivel p { font-size: 1.1rem; }
 
-    /* Para o conteúdo do PDF em telas menores */
     .header-conteudo-pdf,
     main#main-content {
-        max-width: calc(100% - 20px); /* Subtrai 10px de cada lado para margem */
+        max-width: calc(100% - 20px);
         margin-left: auto;
         margin-right: auto;
         border-radius: 0;
     }
     .header-conteudo-pdf { margin-bottom: 15px; }
 
-    #pagina-container-para-pdf { padding: 10px 0; }
+    #pagina-container-para-pdf { padding: 10px 0; } /* Padding vertical menor para telas pequenas */
+                                /* E padding-bottom também pode ser menor aqui se quiser, ex: 40px */
 
     nav.linktree ul li { display: block; margin: 0.8rem 0; }
     nav.linktree ul li a,
