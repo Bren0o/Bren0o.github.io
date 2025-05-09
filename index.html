@@ -3,94 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio - Breno Caldas de Sousa</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link para o arquivo CSS que criaremos -->
+    <title>Portfólio - Breno Caldas</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <h1>Breno Caldas</h1>
         <p>Análise e Desenvolvimento de Sistemas | Assessor de Gestão</p>
+        <!-- Botão para Download do Currículo -->
+        <button id="botaoGerarPdf" class="botao-download-js">
+            Baixar Currículo (PDF)
+        </button>
     </header>
 
-<nav class="linktree">
-    <h2>Meus Links</h2>
-    <ul>
-        <li><a href="mailto:breno.caldas2001@gmail.com" target="_blank">📧 Email</a></li>
-        <li><a href="https://wa.me/5511945841457" target="_blank">💬 WhatsApp</a></li>
-        <li>
-            <a href="curriculo_breno_caldas.pdf" download="Curriculo_Breno_Caldas.pdf" class="botao-linktree-download">
-                📄 Baixar Currículo (PDF)
-            </a>
-        </li>
-    </ul>
-</nav>
+    <nav class="linktree">
+        <h2>Meus Links</h2>
+        <ul>
+            <li><a href="mailto:breno.caldas2001@gmail.com" target="_blank">📧 Email</a></li>
+            <li><a href="https://wa.me/5511945841457" target="_blank">💬 WhatsApp</a></li>
+            <li><a href="URL_DO_SEU_LINKEDIN_AQUI" target="_blank">🔗 LinkedIn</a></li>
+            <li><a href="https://github.com/Bren0o" target="_blank">💻 GitHub</a></li>
+        </ul>
+    </nav>
 
-    <main>
-        <section id="sobre-mim">
-            <h2>Sobre Mim</h2>
-            <p>Olá! Sou Breno, tenho 23 anos e sou apaixonado por tecnologia e análise de dados. Atualmente, busco aplicar e expandir meus conhecimentos em Análise e Desenvolvimento de Sistemas.</p>
-            <ul>
-                <li><strong>Nacionalidade:</strong> Brasileiro</li>
-                <li><strong>Estado Civil:</strong> Solteiro</li>
-                <li><strong>Idade:</strong> 23 anos (29/07/2001)</li>
-                <li><strong>Localização:</strong> Guarulhos/SP</li>
-                <li><strong>Email:</strong> breno.caldas2001@gmail.com</li>
-                <li><strong>Contato:</strong> (11) 9 4584-1457</li>
-            </ul>
-        </section>
+    <!-- INÍCIO DA ÁREA DO CURRÍCULO PARA PDF -->
+    <div id="conteudo-curriculo">
+        <main>
+            <section id="sobre-mim">
+                <h2>Sobre Mim</h2>
+                <p>Olá! Sou Breno, tenho 23 anos e sou apaixonado por tecnologia e análise de dados. Atualmente, busco aplicar e expandir meus conhecimentos em Análise e Desenvolvimento de Sistemas.</p>
+                <ul>
+                    <li><strong>Nacionalidade:</strong> Brasileiro</li>
+                    <li><strong>Estado Civil:</strong> Solteiro</li>
+                    <li><strong>Idade:</strong> 23 anos (29/07/2001)</li>
+                    <li><strong>Localização:</strong> Guarulhos/SP</li>
+                    <li><strong>Email:</strong> breno.caldas2001@gmail.com</li>
+                    <li><strong>Contato:</strong> (11) 9 4584-1457</li>
+                </ul>
+            </section>
 
-        <section id="formacao">
-            <h2>Formação Acadêmica</h2>
-            <ul>
-                <li>Análise e Desenvolvimento de Sistemas - UNICID (Concluído)</li>
-                <li>Ensino Médio Completo</li>
-            </ul>
-            <h3>Cursos Complementares</h3>
-            <ul>
-                <li>Arduino Básico</li>
-                <li>Informática Básica</li>
-            </ul>
-        </section>
+            <section id="formacao">
+                <h2>Formação Acadêmica</h2>
+                <ul>
+                    <li>Análise e Desenvolvimento de Sistemas - UNICID (Concluído)</li>
+                    <li>Ensino Médio Completo</li>
+                </ul>
+                <h3>Cursos Complementares</h3>
+                <ul>
+                    <li>Arduino Básico</li>
+                    <li>Informática Básica</li>
+                </ul>
+            </section>
 
-        <section id="experiencia">
-            <h2>Experiência Profissional</h2>
-            <div class="job">
-                <h3>Assessor de Gestão</h3>
-                <p><strong>Prefeitura de Guarulhos</strong> (Início 2025 - Atual) <!-- Ajuste a data de início se necessário --> </p>
-                <p>Funções: Análise e criação de dashboards e relatórios para a secretaria.</p>
-            </div>
-            <div class="job">
-                <h3>Assistente de Controladoria</h3>
-                <p><strong>Grand Brasil</strong> (2021 - 2022)</p>
-                <p>Funções: Controle do fluxo diário, análise e lançamento de Notas Fiscais, montagem e análise de planilhas do Excel e relatórios de pagamentos, gastos e demonstrativos de resultados gerais.</p>
-            </div>
-            <div class="job">
-                <h3>Aprendiz Administrativo (via Camp Oeste)</h3>
-                <p><strong>Camp Oeste (serviço prestado para Grand Brasil)</strong> (2019 - 2021)</p>
-                <p>Funções: Suporte administrativo, organização de documentos, atendimento e rotinas de escritório, prestando serviço para a Grand Brasil.</p>
-            </div>
-        </section>
+            <section id="experiencia">
+                <h2>Experiência Profissional</h2>
+                <div class="job">
+                    <h3>Assessor de Gestão</h3>
+                    <p><strong>Prefeitura de Guarulhos</strong> (Início 2024 - Atual)</p>
+                    <p>Funções: Análise e criação de dashboards e relatórios para a secretaria.</p>
+                </div>
+                <div class="job">
+                    <h3>Assistente de Controladoria</h3>
+                    <p><strong>Grand Brasil</strong> (2021 - 2022)</p>
+                    <p>Funções: Controle do fluxo diário, análise e lançamento de Notas Fiscais, montagem e análise de planilhas do Excel e relatórios de pagamentos, gastos e demonstrativos de resultados gerais.</p>
+                </div>
+                <div class="job">
+                    <h3>Aprendiz Administrativo (via Camp Oeste)</h3>
+                    <p><strong>Camp Oeste (serviço prestado para Grand Brasil)</strong> (2019 - 2021)</p>
+                    <p>Funções: Suporte administrativo, organização de documentos, atendimento e rotinas de escritório, prestando serviço para a Grand Brasil.</p>
+                </div>
+            </section>
 
-        <section id="habilidades">
-            <h2>Habilidades</h2>
-            <ul>
-                <li>Análise de Dados</li>
-                <li>Criação de Dashboards</li>
-                <li>Relatórios Gerenciais</li>
-                <li>Pacote Office (Excel Avançado)</li>
-                <li>Lançamento de Notas Fiscais</li>
-                <li>Fluxo de Caixa</li>
-                <!-- Adicione mais habilidades que você possui -->
-            </ul>
-        </section>
-    </main>
-
-
-    
+            <section id="habilidades">
+                <h2>Habilidades</h2>
+                <ul>
+                    <li>Análise de Dados</li>
+                    <li>Criação de Dashboards</li>
+                    <li>Relatórios Gerenciais</li>
+                    <li>Pacote Office (Excel Avançado)</li>
+                    <li>Lançamento de Notas Fiscais</li>
+                    <li>Fluxo de Caixa</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <!-- FIM DA ÁREA DO CURRÍCULO PARA PDF -->
 
     <footer>
-        <p>© 2024 Breno Caldas de Sousa. Todos os direitos reservados.</p>
+        <p>© 2024 Breno Caldas. Todos os direitos reservados.</p>
     </footer>
 
+    <!-- Scripts no final do body -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKSignRsumDETAILSBEREHEREITWILLWORK" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Atenção: O hash de integridade do jsPDF acima é um placeholder, pegue o mais recente do CDNJS se necessário. -->
+    <script src="script.js"></script>
 </body>
 </html>
