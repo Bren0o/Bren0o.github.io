@@ -22,34 +22,30 @@ function gerarPDF() {
     }
 
     const larguraDeCapturaPx = 900; // Sua max-width
+    // Salvar estilos originais do container para restauração
     const larguraOriginalContainer = elementoParaPdf.style.width;
     const marginLeftOriginalContainer = elementoParaPdf.style.marginLeft;
     const marginRightOriginalContainer = elementoParaPdf.style.marginRight;
-    const paddingTopOriginal = elementoParaPdf.style.paddingTop; // Salvar padding original
+    const paddingTopOriginal = elementoParaPdf.style.paddingTop;
     const paddingBottomOriginal = elementoParaPdf.style.paddingBottom;
 
     // Forçar o container a ter a largura exata e centralização para a captura
     elementoParaPdf.style.width = larguraDeCapturaPx + 'px';
     elementoParaPdf.style.marginLeft = 'auto';
     elementoParaPdf.style.marginRight = 'auto';
-    // Garantir que o padding que queremos no PDF esteja aplicado durante a captura
-    elementoParaPdf.style.paddingTop = '20px'; // Conforme CSS
-    elementoParaPdf.style.paddingBottom = '100px'; // Conforme CSS (espaço creme)
-
+    // Os paddings verticais e o fundo já estão definidos no CSS para #pagina-container-para-pdf
 
     const options = {
         scale: 2,
         useCORS: true,
         logging: true,
-        backgroundColor: null, // DEIXE O HTML2CANVAS TENTAR PEGAR DO ELEMENTO
-                              // Se o elemento tem !important, deve funcionar.
-                              // Ou tente '#E6E6E6' se null não funcionar.
-        width: larguraDeCapturaPx,
+        backgroundColor: '#E6E6E6', // Tentar forçar o fundo do CANVAS a ser creme
+        width: larguraDeCapturaPx,      // Captura exatamente esta largura
         windowWidth: larguraDeCapturaPx,
-        height: elementoParaPdf.scrollHeight, // Deve incluir os paddings verticais
+        height: elementoParaPdf.scrollHeight, // Deve incluir o .espaco-final-pdf
         windowHeight: elementoParaPdf.scrollHeight,
         x: 0, // Começa a capturar da borda esquerda do container redimensionado
-        removeContainer: false // Adicionado para garantir que o container não seja removido/alterado pelo html2canvas
+        removeContainer: false
     };
 
     html2canvas(elementoParaPdf, options).then(canvas => {
@@ -59,7 +55,6 @@ function gerarPDF() {
         elementoParaPdf.style.marginRight = marginRightOriginalContainer;
         elementoParaPdf.style.paddingTop = paddingTopOriginal;
         elementoParaPdf.style.paddingBottom = paddingBottomOriginal;
-
 
         if (headerConteudoPdf) {
             headerConteudoPdf.classList.remove('mostrar-para-pdf');
