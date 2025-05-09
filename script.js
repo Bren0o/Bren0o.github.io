@@ -13,39 +13,53 @@ function gerarPDF() {
     const elementoParaPdf = document.getElementById('pagina-container-para-pdf');
     const headerConteudoPdf = document.querySelector('.header-conteudo-pdf');
 
-    if (!elementoParaPdf) { /* ... (verificações como antes) ... */ return; }
-    if (!headerConteudoPdf) { /* ... (verificações como antes) ... */ }
+    if (!elementoParaPdf) { /* ... verificações ... */ return; }
+    if (!headerConteudoPdf) { /* ... verificações ... */ }
 
     if (headerConteudoPdf) {
         headerConteudoPdf.classList.remove('oculto-na-pagina');
         headerConteudoPdf.classList.add('mostrar-para-pdf');
     }
 
-    const larguraDeCapturaPx = 900;
+    const larguraDeCapturaPx = 900; // Sua max-width
     const larguraOriginalContainer = elementoParaPdf.style.width;
     const marginLeftOriginalContainer = elementoParaPdf.style.marginLeft;
     const marginRightOriginalContainer = elementoParaPdf.style.marginRight;
+    const paddingTopOriginal = elementoParaPdf.style.paddingTop; // Salvar padding original
+    const paddingBottomOriginal = elementoParaPdf.style.paddingBottom;
 
+    // Forçar o container a ter a largura exata e centralização para a captura
     elementoParaPdf.style.width = larguraDeCapturaPx + 'px';
     elementoParaPdf.style.marginLeft = 'auto';
     elementoParaPdf.style.marginRight = 'auto';
+    // Garantir que o padding que queremos no PDF esteja aplicado durante a captura
+    elementoParaPdf.style.paddingTop = '20px'; // Conforme CSS
+    elementoParaPdf.style.paddingBottom = '100px'; // Conforme CSS (espaço creme)
+
 
     const options = {
-        scale: 1.5, // Mantenha um valor que dê boa qualidade (ex: 1.5 ou 2)
+        scale: 2,
         useCORS: true,
         logging: true,
-        backgroundColor: '#E6E6E6',
+        backgroundColor: null, // DEIXE O HTML2CANVAS TENTAR PEGAR DO ELEMENTO
+                              // Se o elemento tem !important, deve funcionar.
+                              // Ou tente '#E6E6E6' se null não funcionar.
         width: larguraDeCapturaPx,
         windowWidth: larguraDeCapturaPx,
-        height: elementoParaPdf.scrollHeight,
+        height: elementoParaPdf.scrollHeight, // Deve incluir os paddings verticais
         windowHeight: elementoParaPdf.scrollHeight,
-        x: 0
+        x: 0, // Começa a capturar da borda esquerda do container redimensionado
+        removeContainer: false // Adicionado para garantir que o container não seja removido/alterado pelo html2canvas
     };
 
     html2canvas(elementoParaPdf, options).then(canvas => {
+        // Restaurar estilos do container
         elementoParaPdf.style.width = larguraOriginalContainer;
         elementoParaPdf.style.marginLeft = marginLeftOriginalContainer;
         elementoParaPdf.style.marginRight = marginRightOriginalContainer;
+        elementoParaPdf.style.paddingTop = paddingTopOriginal;
+        elementoParaPdf.style.paddingBottom = paddingBottomOriginal;
+
 
         if (headerConteudoPdf) {
             headerConteudoPdf.classList.remove('mostrar-para-pdf');
@@ -53,53 +67,38 @@ function gerarPDF() {
         }
 
         const imgData = canvas.toDataURL('image/png');
+        // ... (resto da lógica do jsPDF como antes) ...
         const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({
-            orientation: 'portrait',
-            unit: 'pt',
-            format: 'a4'
-        });
-
+        const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfPageHeight = pdf.internal.pageSize.getHeight(); // Altura útil de uma página A4 em 'pt'
+        const pdfPageHeight = pdf.internal.pageSize.getHeight();
         const imgProps = pdf.getImageProperties(imgData);
-
-        // Calcular a altura da imagem se ela for redimensionada para caber na LARGURA do PDF
-        let scaledImgHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        let scaledImgWidth = pdfWidth;
-
-        // SE QUISER FORÇAR TUDO EM UMA PÁGINA, E A IMAGEM FOR MAIS ALTA QUE A PÁGINA PDF:
-        // Redimensiona a imagem para caber na ALTURA da página, ajustando a largura proporcionalmente.
-        // Isso pode fazer a imagem parecer "achatada" se o conteúdo for muito longo.
-        // Ou, se scaledImgHeight > pdfPageHeight, você pode optar por CORTAR a imagem
-        // ou permitir múltiplas páginas (que é o que a lógica anterior fazia).
-        // Para forçar em uma página, se scaledImgHeight > pdfPageHeight:
-        if (scaledImgHeight > pdfPageHeight) {
-            console.warn("Conteúdo é maior que uma página A4. Tentando ajustar à altura da página.");
-            scaledImgWidth = (imgProps.width * pdfPageHeight) / imgProps.height; // Recalcula a largura para manter proporção
-            scaledImgHeight = pdfPageHeight; // Força a altura a ser a da página
-
-            // Centralizar a imagem se ela ficou mais estreita que a página
-            let offsetX = (pdfWidth - scaledImgWidth) / 2;
-             pdf.addImage(imgData, 'PNG', offsetX, 0, scaledImgWidth, scaledImgHeight);
-        } else {
-            // A imagem já cabe ou é menor que uma página, centraliza horizontalmente
-            let offsetX = (pdfWidth - scaledImgWidth) / 2;
-            if (scaledImgWidth < pdfWidth) offsetX = (pdfWidth - scaledImgWidth) / 2; else offsetX =0;
-
-            pdf.addImage(imgData, 'PNG', offsetX, 0, scaledImgWidth, scaledImgHeight);
-        }
-
-        // Remover a lógica de múltiplas páginas se você está forçando uma única página:
-        /*
+        const scaledImgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        const scaledImgWidth = pdfWidth;
         let currentPositionInImage = 0;
         let pageCount = 0;
         while(currentPositionInImage < scaledImgHeight) {
-            // ... (lógica antiga de múltiplas páginas) ...
+            if (pageCount > 0) { pdf.addPage(); }
+            pdf.addImage(imgData, 'PNG', 0, -currentPositionInImage, scaledImgWidth, scaledImgHeight);
+            currentPositionInImage += pdfPageHeight;
+            pageCount++;
+            if (currentPositionInImage >= scaledImgHeight - 10) break;
         }
-        */
-
         pdf.save('Curriculo_Breno_Caldas.pdf');
 
-    }).catch(error => { /* ... (bloco catch como antes) ... */ });
+    }).catch(error => {
+        // Restaurar estilos do container em caso de erro
+        elementoParaPdf.style.width = larguraOriginalContainer;
+        elementoParaPdf.style.marginLeft = marginLeftOriginalContainer;
+        elementoParaPdf.style.marginRight = marginRightOriginalContainer;
+        elementoParaPdf.style.paddingTop = paddingTopOriginal;
+        elementoParaPdf.style.paddingBottom = paddingBottomOriginal;
+
+        if (headerConteudoPdf) {
+            headerConteudoPdf.classList.remove('mostrar-para-pdf');
+            headerConteudoPdf.classList.add('oculto-na-pagina');
+        }
+        console.error("Erro ao gerar PDF com html2canvas:", error);
+        alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
+    });
 }
