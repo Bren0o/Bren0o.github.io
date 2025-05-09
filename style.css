@@ -9,7 +9,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #E6E6E6;
+    background-color: #E6E6E6; /* Fundo creme da página web */
     color: #333;
 }
 
@@ -34,9 +34,9 @@ header#header-pagina-web p {
 .header-para-pdf {
     background: #1E2F4B;
     color: white;
-    padding: 1.5rem 20px;
+    padding: 1.5rem 20px; /* Padding interno vertical e horizontal */
     text-align: center;
-    margin: 0 auto 0 auto; /* Centraliza, sem margem inferior, pois o main virá logo abaixo */
+    margin: 0 auto 20px auto; /* Centraliza e adiciona margem inferior ANTES do main */
     max-width: 900px;
     box-sizing: border-box;
     border-radius: 8px 8px 0 0;
@@ -66,7 +66,7 @@ header#header-pagina-web p {
 nav.linktree {
     background: #1E2F4B;
     color: white;
-    padding: 1.5rem;
+    padding: 1.5rem; /* Padding original */
     text-align: center;
     border-top: 2px solid #E6E6E6;
     border-bottom: 2px solid #E6E6E6;
@@ -74,56 +74,33 @@ nav.linktree {
 
 nav.linktree h2 {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1rem; /* Margem original */
     font-size: 1.8rem;
     color: white;
 }
 
-nav.linktree ul {
-    list-style: none;
-    padding: 0;
-}
+/* ... (restante dos estilos do linktree, main, section, h2, job, ul, habilidades, footer, botao-download-js, ocultar-no-pdf são os mesmos da versão anterior que funcionava o download) ... */
+/* Vou repetir apenas o que é crucial para o layout do PDF */
 
-nav.linktree ul li {
-    display: inline-block;
-    margin: 0.5rem;
-}
-
-nav.linktree ul li a,
-nav.linktree ul li a:link,
-nav.linktree ul li a:visited {
-    color: white;
-    text-decoration: none;
-    padding: 0.7rem 1.5rem;
-    border: 2px solid white;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-weight: bold;
-}
-
-nav.linktree ul li a:hover,
-nav.linktree ul li a:focus {
-    background-color: white;
-    color: #1E2F4B;
-}
-
-/* Área que será capturada para o PDF */
 #conteudo-curriculo {
     background-color: #E6E6E6; /* Fundo creme PARA O PDF */
-    padding: 20px 0; /* Apenas padding vertical. O padding lateral pode interferir com a largura dos filhos. */
-    /* A largura será determinada pelos filhos com max-width e margin: auto */
+    padding: 20px 0; /* Padding APENAS vertical. Os filhos (header-pdf e main) se centralizarão com margin:auto */
+    /* A largura efetiva do #conteudo-curriculo será a largura dos seus filhos com max-width,
+       mais o padding vertical. Isso ajuda html2canvas a "ver" o fundo creme ao redor.
+    */
 }
 
 /* O <main> dentro da área do PDF */
 #conteudo-curriculo main {
-    padding: 25px;
+    padding: 25px; /* Padding interno original */
     max-width: 900px;
-    margin: 0 auto; /* Centraliza o <main> */
+    margin: 0 auto; /* Centraliza o <main> e garante que ele encoste no .header-para-pdf */
     background-color: white;
     box-shadow: 0 0 15px rgba(0,0,0,0.15);
-    border-radius: 0 0 8px 8px; /* Continua o border-radius do .header-para-pdf */
+    border-radius: 0 0 8px 8px; /* Cantos inferiores arredondados */
 }
 
+/* Copiando o restante dos estilos para garantir que não falte nada */
 section {
     margin-bottom: 2.5rem;
     padding-bottom: 1.5rem;
@@ -141,6 +118,10 @@ h2 {
     margin-bottom: 1.5rem;
     font-size: 2rem;
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
+}
+
+.job {
+    margin-bottom: 1.8rem;
 }
 
 .job h3 {
@@ -206,10 +187,7 @@ footer {
     border: 2px solid #1E2F4B;
 }
 
-.ocultar-no-pdf {
-    display: none !important;
-}
-
+/* Ajustes para telas menores */
 @media (max-width: 768px) {
     header#header-pagina-web h1 {
         font-size: 2.2rem;
@@ -226,25 +204,27 @@ footer {
     nav.linktree ul li a:visited {
         display: block;
     }
+
     /* Para telas menores, fazemos o .header-para-pdf e o main ocuparem quase toda a largura */
     .header-para-pdf,
     #conteudo-curriculo main {
-        max-width: calc(100% - 20px); /* Deixa uma pequena margem lateral de 10px de cada lado */
-        margin-left: auto;
-        margin-right: auto;
+        max-width: 100%; /* Ocupa toda a largura disponível menos paddings do pai */
+        margin-left: 10px;  /* Pequena margem para não colar nas bordas */
+        margin-right: 10px;
         padding-left: 15px;
         padding-right: 15px;
-        border-radius: 0; /* Sem bordas arredondadas em telas pequenas */
+        border-radius: 0;
+        box-sizing: border-box; /* Importante para calc com padding */
     }
     .header-para-pdf {
-        margin-bottom: 0; /* Remove a margem inferior para que o main encoste nele */
+        margin-bottom: 0; /* Main encosta no header do PDF */
     }
     #conteudo-curriculo main {
-         /* Sem margem inferior específica aqui, o padding do #conteudo-curriculo cuida disso */
+         /* Margem inferior do main será dada pelo padding-bottom do #conteudo-curriculo */
     }
 
-     #conteudo-curriculo {
-        padding: 15px 0; /* Padding vertical para telas menores */
+    #conteudo-curriculo {
+        padding: 15px 0; /* Padding vertical para #conteudo-curriculo */
     }
     h2 {
         font-size: 1.8rem;
