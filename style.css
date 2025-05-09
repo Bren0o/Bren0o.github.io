@@ -1,57 +1,197 @@
-/* Adicionar/Modificar estas regras no seu style.css */
+/*
+COR_AZUL_ESCURO_TITULO = '#1E2F4B'
+COR_BRANCO_CREME_FUNDO = '#E6E6E6'
+COR_DEMAIS_INFOS = 'white'
+*/
 
-/* ... (seu CSS existente) ... */
+body {
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Comic Sans com alternativas */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #E6E6E6; /* COR_BRANCO_CREME_FUNDO */
+    color: #333; /* Cor de texto padrão para conteúdo no fundo branco/creme */
+}
 
-/* Estilo para o cabeçalho que aparecerá no PDF */
-.header-para-pdf {
+header {
     background: #1E2F4B; /* COR_AZUL_ESCURO_TITULO */
-    color: white;
+    color: white; /* COR_DEMAIS_INFOS - para texto no header */
     padding: 1.5rem 0;
     text-align: center;
-    /* Remove margens para não criar espaços extras no topo do PDF se for o primeiro elemento */
-    margin-top: 0;
-    margin-bottom: 20px; /* Espaço antes do conteúdo principal do currículo */
 }
 
-.header-para-pdf h1 {
+header h1 {
     margin: 0;
-    font-size: 2.5rem; /* Pode ajustar o tamanho para o PDF */
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
+    font-size: 2.8rem;
 }
 
-.header-para-pdf p {
-    font-size: 1.2rem; /* Pode ajustar o tamanho para o PDF */
+header p {
+    font-size: 1.3rem;
     margin-top: 0.5rem;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
 }
 
-/* Para que o fundo do PDF seja o creme, o conteúdo capturado precisa ter esse fundo */
-#conteudo-curriculo {
-    background-color: #E6E6E6; /* COR_BRANCO_CREME_FUNDO */
-    padding-top: 1px; /* Hack para evitar colapso de margem com .header-para-pdf se ele for o primeiro filho */
+nav.linktree {
+    background: #1E2F4B; /* COR_AZUL_ESCURO_TITULO */
+    color: white; /* COR_DEMAIS_INFOS - para texto no linktree (como o H2) */
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 2px solid #E6E6E6;
+    border-bottom: 2px solid #E6E6E6;
 }
 
-/* Se #conteudo-curriculo tem o fundo creme,
-   o <main> dentro dele pode voltar a ter fundo branco para as seções,
-   ou pode manter o fundo creme e as seções terem fundo branco.
-   Vamos fazer as seções terem fundo branco para contraste. */
-#conteudo-curriculo main {
-    background-color: white; /* Fundo branco para as seções dentro do container creme */
-    /* Os paddings e margins do main original já devem funcionar bem aqui */
-    /* Se você moveu o <main> para dentro de #conteudo-curriculo,
-       certifique-se que os estilos de main (max-width, margin: auto, etc.)
-       ainda se apliquem corretamente ou copie-os para #conteudo-curriculo main {}
-    */
+nav.linktree h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+nav.linktree ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav.linktree ul li {
+    display: inline-block;
+    margin: 0.5rem;
+}
+
+nav.linktree ul li a,
+nav.linktree ul li a:link,
+nav.linktree ul li a:visited {
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+}
+
+nav.linktree ul li a:hover,
+nav.linktree ul li a:focus {
+    background-color: white;
+    color: #1E2F4B;
+}
+
+main {
     padding: 25px;
-    max-width: 900px; /* Ou a largura que você quer para o conteúdo no PDF */
-    margin: 0 auto 30px auto; /* Centraliza e dá espaço abaixo */
+    max-width: 900px;
+    margin: 30px auto;
+    background-color: white;
     box-shadow: 0 0 15px rgba(0,0,0,0.15);
     border-radius: 8px;
 }
 
-/* Garantir que o botão de download da página não seja capturado se ele estiver dentro do elemento a ser impresso */
-#botaoGerarPdf.ocultar-no-pdf {
+section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed #cccccc;
+}
+
+section:last-child {
+    border-bottom: none;
+}
+
+h2 {
+    color: #1E2F4B;
+    border-bottom: 3px solid #1E2F4B;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.job {
+    margin-bottom: 1.8rem;
+}
+
+.job h3 {
+    margin-bottom: 0.3rem;
+    color: #1E2F4B;
+    font-size: 1.4rem;
+}
+
+.job p {
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    color: #555;
+}
+
+ul {
+    list-style: disc;
+    padding-left: 25px;
+}
+
+#habilidades ul li {
+    background-color: #f0f0f0;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border-left: 4px solid #1E2F4B;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: #1E2F4B;
+    color: white;
+    margin-top: 3rem;
+}
+
+/* Estilo para o botão de download gerado por JS */
+.botao-download-js {
+    display: inline-block;
+    background-color: #1E2F4B; /* Sua cor azul escuro */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+    border: 2px solid #1E2F4B; /* Borda da mesma cor do fundo */
+    cursor: pointer; /* Indica que é clicável */
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Mantém a fonte */
+    font-size: 1rem; /* Tamanho da fonte do botão */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.botao-download-js:hover {
+    background-color: white;
+    color: #1E2F4B;
+    border: 2px solid #1E2F4B; /* Borda visível no hover */
+}
+
+/* Classe para ocultar elementos durante a geração do PDF */
+.ocultar-no-pdf {
     display: none !important;
 }
 
-/* Resto do seu CSS... */
+
+/* Ajustes para telas menores (Responsividade básica) */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+    header p {
+        font-size: 1.1rem;
+    }
+    nav.linktree ul li {
+        display: block;
+        margin: 0.8rem 0;
+    }
+    nav.linktree ul li a,
+    nav.linktree ul li a:link,
+    nav.linktree ul li a:visited {
+        display: block;
+    }
+    main {
+        padding: 15px;
+        margin: 15px;
+        border-radius: 0;
+    }
+    h2 {
+        font-size: 1.8rem;
+    }
+    .job h3 {
+        font-size: 1.3rem;
+    }
+}
