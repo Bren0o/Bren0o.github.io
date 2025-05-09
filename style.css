@@ -1,0 +1,126 @@
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+nav.linktree {
+    background: #444;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav.linktree h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+nav.linktree ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav.linktree ul li {
+    display: inline-block; /* ou 'block' para links em linhas separadas */
+    margin: 0.5rem;
+}
+
+nav.linktree ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav.linktree ul li a:hover {
+    background-color: #555;
+}
+
+main {
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto; /* Centraliza o conteúdo principal */
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+section {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dotted #ccc;
+}
+
+section:last-child {
+    border-bottom: none;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.job {
+    margin-bottom: 1.5rem;
+}
+
+.job h3 {
+    margin-bottom: 0.2rem;
+    color: #555;
+}
+
+.job p {
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+
+ul {
+    list-style: disc; /* ou 'square', 'circle', 'none' */
+    padding-left: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: #333;
+    color: #fff;
+    margin-top: 2rem;
+}
+
+/* Ajustes para telas menores (Responsividade básica) */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    nav.linktree ul li {
+        display: block; /* Links um abaixo do outro em telas pequenas */
+        margin: 0.5rem 0;
+    }
+    main {
+        padding: 10px;
+        margin: 10px;
+    }
+}
