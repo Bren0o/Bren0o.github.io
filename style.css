@@ -2,7 +2,7 @@
 :root {
     --cor-azul-escuro: #1E2F4B;
     --cor-branco-creme-pagina: #E6E6E6; /* Fundo da página web */
-    --cor-branco-pdf-container: #FFFFFF; /* Fundo da área de captura do PDF */
+    --cor-branco-conteudo: #FFFFFF;     /* Fundo do conteúdo principal na web e no PDF */
     --cor-texto-claro: white;
     --cor-texto-escuro: #333;
 }
@@ -12,67 +12,72 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: var(--cor-branco-creme-pagina); /* Fundo creme para a PÁGINA WEB */
+    background-color: var(--cor-branco-creme-pagina); /* PÁGINA WEB COM FUNDO CREME */
     color: var(--cor-texto-escuro);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* Header da página web (com botão) */
+/* Header da PÁGINA WEB */
 header#header-pagina-web {
     background: var(--cor-azul-escuro);
     color: var(--cor-texto-claro);
-    padding: 1.5rem 0;
+    padding: 1.5rem 20px; /* Padding interno */
     text-align: center;
+    margin: 20px auto 0 auto; /* Margem superior, centralizado, sem margem inferior */
+    max-width: 900px;         /* LARGURA MÁXIMA DEFINIDA */
+    box-sizing: border-box;
+    border-radius: 8px 8px 0 0;
 }
 header#header-pagina-web h1 { margin: 0; font-size: 2.8rem; }
 header#header-pagina-web p { font-size: 1.3rem; margin-top: 0.5rem; }
 
-/* Área de captura para o PDF */
-#pdf-content-area {
-    background-color: var(--cor-branco-pdf-container); /* FUNDO BRANCO PARA O PDF */
-    padding: 20px 0; /* Padding vertical para dar respiro ao conteúdo do PDF */
-    width: 100%; /* Necessário para que os filhos centralizem corretamente */
+/* Main da PÁGINA WEB */
+main#main-pagina-web {
+    padding: 25px;
+    max-width: 900px;
+    margin: 0 auto 30px auto; /* Centralizado, margem inferior para separar do bloco azul */
+    background-color: var(--cor-branco-conteudo); /* FUNDO BRANCO PARA O CONTEÚDO */
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 0 0 8px 8px;
     box-sizing: border-box;
-    flex-grow: 1; /* Ocupa espaço disponível na página web */
+    flex-grow: 1; /* Faz o main crescer para empurrar o bloco azul para baixo */
 }
 
-/* Header que aparece no PDF (sem botão) */
-.header-para-pdf {
+/* --- Estilos para os elementos DENTRO da área de captura do PDF --- */
+#pdf-capture-area {
+    background-color: var(--cor-branco-conteudo); /* FUNDO DO PDF SERÁ BRANCO */
+    padding: 20px; /* Um padding interno para a área de captura, se necessário */
+    /* A largura será definida pelo JS antes da captura */
+}
+
+.header-para-pdf { /* Header que aparece no PDF */
     background: var(--cor-azul-escuro);
     color: var(--cor-texto-claro);
     padding: 1.5rem 20px;
     text-align: center;
-    margin: 0 auto 20px auto; /* Centraliza, margem inferior para separar do main */
-    max-width: 900px;
-    box-sizing: border-box;
-    border-radius: 8px 8px 0 0;
+    margin-bottom: 20px; /* Espaço antes do main-content-pdf-copy */
+    /* max-width e margin:auto não são necessários aqui, pois o pai #pdf-capture-area terá a largura certa */
+    border-radius: 8px 8px 0 0; /* Mantém o visual */
 }
 .header-para-pdf h1 { margin: 0; font-size: 2.8rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 .header-para-pdf p { font-size: 1.3rem; margin-top: 0.5rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 
-.oculto-na-pagina { display: none !important; }
-.mostrar-para-pdf { display: block !important; }
-
-/* Main conteúdo do currículo */
-main#main-curriculo {
-    padding: 25px;
-    max-width: 900px;
-    margin: 0 auto; /* Centraliza */
-    background-color: var(--cor-branco-pdf-container); /* Fundo branco também */
-    box-shadow: 0 0 15px rgba(0,0,0,0.1); /* Sombra mais sutil */
-    border-radius: 0 0 8px 8px;
-    box-sizing: border-box;
+#main-content-pdf-copy {
+    background-color: var(--cor-branco-conteudo); /* Garante fundo branco */
+    padding: 25px; /* Replica o padding do main original */
+    border-radius: 0 0 8px 8px; /* Replica o border-radius */
+    /* A sombra não é necessária aqui, pois é para o PDF */
 }
+/* Importante: Os estilos das seções, h2, job, etc., DENTRO de #main-content-pdf-copy
+   serão herdados dos estilos globais ou você pode precisar de seletores mais específicos
+   se quiser que eles sejam diferentes no PDF vs Web.
+   Para simplificar, vamos assumir que os estilos globais são suficientes. */
+
 
 /* Bloco inferior com links e footer */
-.bloco-inferior-azul {
-    background: var(--cor-azul-escuro);
-    color: var(--cor-texto-claro);
-    width: 100%;
-    margin-top: auto; /* Empurra para o final */
-}
+.bloco-inferior-azul { background: var(--cor-azul-escuro); color: var(--cor-texto-claro); width: 100%; margin-top: auto; /* Empurra para o final */ }
 nav.linktree { padding: 1.5rem; text-align: center; }
 nav.linktree h2 { margin-top: 0; margin-bottom: 1rem; font-size: 1.8rem; color: var(--cor-texto-claro); }
 nav.linktree ul { list-style: none; padding: 0; }
@@ -84,7 +89,7 @@ nav.linktree ul li a:hover,
 nav.linktree ul li a:focus { background-color: var(--cor-texto-claro); color: var(--cor-azul-escuro); }
 footer { text-align: center; padding: 1rem 1.5rem 1.5rem 1.5rem; }
 
-/* Estilos das seções, títulos, etc. */
+/* Estilos das seções, títulos, etc. (aplicáveis tanto na web quanto na cópia do PDF) */
 section { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px dashed #cccccc; }
 section:last-child { border-bottom: none; }
 h2 { color: var(--cor-azul-escuro); border-bottom: 3px solid var(--cor-azul-escuro); padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 2rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
@@ -96,24 +101,25 @@ ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkb
 #habilidades ul li { background-color: #f0f0f0; margin-bottom: 8px; padding: 8px 12px; border-radius: 5px; border-left: 4px solid var(--cor-azul-escuro); font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
 
 /* Botão de download */
-.botao-download-js { display: inline-block; background-color: transparent; /* Fundo do header da página */ color: var(--cor-texto-claro); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: 2px solid var(--cor-texto-claro); cursor: pointer; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; font-size: 1rem; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+.botao-download-js { display: inline-block; background-color: transparent; color: var(--cor-texto-claro); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: 2px solid var(--cor-texto-claro); cursor: pointer; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; font-size: 1rem; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
 .botao-download-js:hover { background-color: var(--cor-texto-claro); color: var(--cor-azul-escuro); border-color: var(--cor-texto-claro); }
 
-/* Media Queries para responsividade */
+/* Media Queries */
 @media (max-width: 768px) {
-    header#header-pagina-web h1 { font-size: 2.2rem; }
-    header#header-pagina-web p { font-size: 1.1rem; }
-
-    #pdf-content-area { padding: 10px 0; }
-
-    .header-para-pdf,
-    main#main-curriculo {
-        max-width: calc(100% - 20px); /* Deixa 10px de margem em cada lado */
+    header#header-pagina-web,
+    main#main-pagina-web { /* Aplicando responsividade ao header e main da página web */
+        max-width: calc(100% - 20px);
         margin-left: auto;
         margin-right: auto;
         border-radius: 0;
     }
-    .header-para-pdf { margin-top: 10px; margin-bottom: 15px; }
+    header#header-pagina-web { margin-top: 10px; margin-bottom: 0; }
+    main#main-pagina-web { margin-bottom: 20px; }
+
+    header#header-pagina-web h1 { font-size: 2.2rem; }
+    header#header-pagina-web p { font-size: 1.1rem; }
+
+    /* Para o conteúdo do PDF em telas menores, o JS definirá a largura de captura */
 
     nav.linktree ul li { display: block; margin: 0.8rem 0; }
     nav.linktree ul li a,
