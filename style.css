@@ -171,3 +171,42 @@ footer {
         font-size: 1.3rem;
     }
 }
+
+.botao-download {
+    display: inline-block; /* ou block se quiser que ocupe a linha toda */
+    background-color: #1E2F4B; /* Sua cor azul escuro */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 15px; /* Espaçamento */
+    border: 2px solid #1E2F4B;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.botao-download:hover {
+    background-color: white;
+    color: #1E2F4B;
+    border: 2px solid #1E2F4B;
+}
+
+/* Se você colocou o botão no linktree, pode querer um estilo que combine com os outros botões de lá */
+/* Se usar a classe 'botao-linktree-download' para o botão no linktree: */
+.botao-linktree-download {
+    /* Você pode copiar os estilos de nav.linktree ul li a e ajustar se necessário,
+       ou garantir que ele se encaixe bem com os outros itens <li><a> */
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+    display: inline-block; /* Para que se comporte como os outros botões do linktree */
+}
+
+.botao-linktree-download:hover {
+    background-color: white;
+    color: #1E2F4B;
+}
