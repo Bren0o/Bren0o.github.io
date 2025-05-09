@@ -4,20 +4,20 @@
     --cor-branco-creme-pagina: #E6E6E6; /* Fundo da página web */
     --cor-branco-conteudo: #FFFFFF;     /* Fundo do conteúdo principal na web e no PDF */
     --cor-texto-claro: white;
-    --cor-texto-escuro-padrao: #333; /* Para parágrafos normais */
+    --cor-texto-escuro-padrao: #333;
 }
 
 body {
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
     line-height: 1.6;
     margin: 0;
-    padding: 0;
+    padding: 0; /* Removido padding do body que poderia interferir */
     background-color: var(--cor-branco-creme-pagina); /* FUNDO GERAL CREME */
     color: var(--cor-texto-escuro-padrao);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    align-items: center; 
+    align-items: center; /* Centraliza os filhos diretos que têm largura definida */
 }
 
 /* HEADER DA PÁGINA WEB */
@@ -26,10 +26,12 @@ header#header-pagina-web {
     color: var(--cor-texto-claro);
     padding: 1.5rem 20px;
     text-align: center;
-    margin: 20px auto 20px auto; /* Alterado: 20px topo, auto laterais, 20PX EMBAIXO, auto laterais */
-    max-width: 900px;
+    width: 100%; /* Ocupa a largura do seu container pai (que será o body ou um wrapper) */
+    max-width: 900px; /* LARGURA MÁXIMA DO CONTEÚDO */
     box-sizing: border-box;
-    border-radius: 8px; /* Bordas arredondadas em todos os cantos */
+    margin-top: 30px; /* ESPAÇO CREME ACIMA DO HEADER */
+    margin-bottom: 0; /* Header encosta no main */
+    border-radius: 8px 8px 0 0;
 }
 header#header-pagina-web h1 { margin: 0; font-size: 2.8rem; }
 header#header-pagina-web p { font-size: 1.3rem; margin-top: 0.5rem; }
@@ -41,27 +43,29 @@ header#header-pagina-web p { font-size: 1.3rem; margin-top: 0.5rem; }
 /* MAIN DA PÁGINA WEB */
 main#main-pagina-web {
     padding: 25px;
-    max-width: 900px;
-    margin: 0 auto 30px auto; /* Margem superior 0 (pois o header agora tem margin-bottom), centralizado, margem inferior 30px */
+    width: 100%; /* Ocupa a largura do seu container pai */
+    max-width: 900px; /* LARGURA MÁXIMA DO CONTEÚDO */
+    margin-top: 0; /* Encosta no header */
+    margin-bottom: 30px; /* ESPAÇO CREME ABAIXO DO MAIN */
     background-color: var(--cor-branco-conteudo);
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px; /* Bordas arredondadas em todos os cantos */
+    border-radius: 0 0 8px 8px;
     box-sizing: border-box;
-    flex-grow: 1;
+    /* flex-grow: 1; // Removido daqui, o body cuida de empurrar o rodapé */
 }
 
-/* --- ESTILOS PARA A ÁREA DE CAPTURA DO PDF (dentro de #pdf-capture-area) --- */
+/* ESTILOS PARA A ÁREA DE CAPTURA DO PDF (dentro de #pdf-capture-area) */
 #pdf-capture-area {
     background-color: var(--cor-branco-conteudo);
-    padding-top: 20px;
-    padding-bottom: 40px;
+    padding-top: 20px; /* Espaço branco acima do header azul NO PDF */
+    padding-bottom: 40px;/* Espaço branco abaixo do main-content-pdf-copy NO PDF */
 }
 #pdf-capture-area .header-para-pdf {
     background: var(--cor-azul-escuro);
     color: var(--cor-texto-claro);
     padding: 1.5rem 20px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* ESPAÇO ENTRE HEADER E MAIN NO PDF */
     border-radius: 8px 8px 0 0;
 }
 #pdf-capture-area .header-para-pdf h1 { margin: 0; font-size: 2.8rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
@@ -84,7 +88,12 @@ main#main-pagina-web {
 
 
 /* RODAPÉ COMBINADO */
-.rodape-combinado { background: var(--cor-azul-escuro); color: var(--cor-texto-claro); width: 100%; margin-top: auto; }
+.rodape-combinado {
+    background: var(--cor-azul-escuro);
+    color: var(--cor-texto-claro);
+    width: 100%; /* Largura total da janela */
+    margin-top: auto;
+}
 .rodape-combinado nav.linktree { padding: 1.5rem 1.5rem 0.5rem 1.5rem; text-align: center; }
 .rodape-combinado nav.linktree h2 { margin-top: 0; margin-bottom: 1rem; font-size: 1.8rem; }
 .rodape-combinado nav.linktree ul { list-style: none; padding: 0; }
@@ -113,11 +122,10 @@ ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkb
         max-width: calc(100% - 20px);
         margin-left: auto;
         margin-right: auto;
-        border-radius: 0; /* Pode remover border-radius para o header também se desejar */
+        border-radius: 0;
     }
-    header#header-pagina-web { margin-top: 10px; margin-bottom: 15px; /* Espaço abaixo do header em mobile */ }
-    main#main-pagina-web { margin-top:0; margin-bottom: 20px; } /* Encosta no header, espaço abaixo */
-
+    header#header-pagina-web { margin-top: 10px; margin-bottom: 0; }
+    main#main-pagina-web { margin-bottom: 20px; }
     header#header-pagina-web h1 { font-size: 2.2rem; }
     header#header-pagina-web p { font-size: 1.1rem; }
 
