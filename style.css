@@ -13,156 +13,115 @@ body {
     color: #333;
 }
 
+/* Container que será capturado para o PDF */
+#pagina-container {
+    background-color: #E6E6E6; /* Fundo creme para a área do PDF */
+    padding-top: 1px; /* Evita colapso de margem do primeiro filho */
+    padding-bottom: 20px; /* Espaço no final do container no PDF */
+}
+
 header#header-pagina-web {
     background: #1E2F4B;
     color: white;
-    padding: 1.5rem 0;
+    padding: 1.5rem 20px; /* Padding interno */
     text-align: center;
+    margin: 20px auto 0 auto; /* Margem superior, centraliza, sem margem inferior */
+    max-width: 900px;
+    box-sizing: border-box;
+    border-radius: 8px 8px 0 0; /* Arredonda topo */
 }
 
 header#header-pagina-web h1 {
     margin: 0;
-    font-size: 2.8rem;
+    font-size: 2.8rem; /* Tamanho original */
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
 }
 
 header#header-pagina-web p {
-    font-size: 1.3rem;
-    margin-top: 0.5rem;
-}
-
-/* Estilo para o cabeçalho que aparecerá DENTRO do PDF */
-.header-para-pdf {
-    background: #1E2F4B;
-    color: white;
-    padding: 1.5rem 20px; /* Padding interno vertical e horizontal */
-    text-align: center;
-    margin: 0 auto 20px auto; /* Centraliza e adiciona margem inferior ANTES do main */
-    max-width: 900px;
-    box-sizing: border-box;
-    border-radius: 8px 8px 0 0;
-}
-
-.header-para-pdf h1 {
-    margin: 0;
-    font-size: 2.5rem;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
-
-.header-para-pdf p {
-    font-size: 1.2rem;
+    font-size: 1.3rem; /* Tamanho original */
     margin-top: 0.5rem;
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
 }
 
-.oculto-na-pagina {
+/* Ocultar o botão de download no PDF */
+.gerando-pdf #botaoGerarPdf {
     display: none !important;
 }
 
-.mostrar-para-pdf {
-    display: block !important;
+main#main-content {
+    padding: 25px;
+    max-width: 900px;
+    margin: 0 auto; /* Centraliza e encosta no header */
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    border-radius: 0 0 8px 8px; /* Arredonda base */
 }
-
 
 nav.linktree {
     background: #1E2F4B;
     color: white;
-    padding: 1.5rem; /* Padding original */
+    padding: 1.5rem;
     text-align: center;
-    border-top: 2px solid #E6E6E6;
-    border-bottom: 2px solid #E6E6E6;
+    /* Removido border-top/bottom para melhor fluxo se for no final */
+    margin-top: 30px; /* Espaço acima do linktree */
 }
 
 nav.linktree h2 {
     margin-top: 0;
-    margin-bottom: 1rem; /* Margem original */
+    margin-bottom: 1rem;
     font-size: 1.8rem;
     color: white;
 }
 
-/* ... (restante dos estilos do linktree, main, section, h2, job, ul, habilidades, footer, botao-download-js, ocultar-no-pdf são os mesmos da versão anterior que funcionava o download) ... */
-/* Vou repetir apenas o que é crucial para o layout do PDF */
-
-#conteudo-curriculo {
-    background-color: #E6E6E6; /* Fundo creme PARA O PDF */
-    padding: 20px 0; /* Padding APENAS vertical. Os filhos (header-pdf e main) se centralizarão com margin:auto */
-    /* A largura efetiva do #conteudo-curriculo será a largura dos seus filhos com max-width,
-       mais o padding vertical. Isso ajuda html2canvas a "ver" o fundo creme ao redor.
-    */
+nav.linktree ul {
+    list-style: none;
+    padding: 0;
 }
 
-/* O <main> dentro da área do PDF */
-#conteudo-curriculo main {
-    padding: 25px; /* Padding interno original */
-    max-width: 900px;
-    margin: 0 auto; /* Centraliza o <main> e garante que ele encoste no .header-para-pdf */
+nav.linktree ul li {
+    display: inline-block;
+    margin: 0.5rem;
+}
+
+nav.linktree ul li a,
+nav.linktree ul li a:link,
+nav.linktree ul li a:visited {
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+}
+
+nav.linktree ul li a:hover,
+nav.linktree ul li a:focus {
     background-color: white;
-    box-shadow: 0 0 15px rgba(0,0,0,0.15);
-    border-radius: 0 0 8px 8px; /* Cantos inferiores arredondados */
+    color: #1E2F4B;
 }
 
-/* Copiando o restante dos estilos para garantir que não falte nada */
+/* Estilos para seções, títulos, etc. permanecem os mesmos */
 section {
     margin-bottom: 2.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px dashed #cccccc;
 }
-
-section:last-child {
-    border-bottom: none;
-}
-
-h2 {
-    color: #1E2F4B;
-    border-bottom: 3px solid #1E2F4B;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
-
-.job {
-    margin-bottom: 1.8rem;
-}
-
-.job h3 {
-    margin-bottom: 0.3rem;
-    color: #1E2F4B;
-    font-size: 1.4rem;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
-
-.job p {
-    margin-top: 0.4rem;
-    margin-bottom: 0.4rem;
-    color: #555;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
-
-ul {
-    list-style: disc;
-    padding-left: 25px;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
-#sobre-mim ul li{
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
-
-
-#habilidades ul li {
-    background-color: #f0f0f0;
-    margin-bottom: 8px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    border-left: 4px solid #1E2F4B;
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
-}
+section:last-child { border-bottom: none; }
+h2 { color: #1E2F4B; border-bottom: 3px solid #1E2F4B; padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 2rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
+.job { margin-bottom: 1.8rem; }
+.job h3 { margin-bottom: 0.3rem; color: #1E2F4B; font-size: 1.4rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
+.job p { margin-top: 0.4rem; margin-bottom: 0.4rem; color: #555; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
+ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
+#sobre-mim ul li{ font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
+#habilidades ul li { background-color: #f0f0f0; margin-bottom: 8px; padding: 8px 12px; border-radius: 5px; border-left: 4px solid #1E2F4B; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
 
 footer {
     text-align: center;
     padding: 1.5rem;
     background: #1E2F4B;
     color: white;
-    margin-top: 3rem;
+    margin-top: 2rem; /* Margem ajustada */
 }
 
 .botao-download-js {
@@ -189,47 +148,30 @@ footer {
 
 /* Ajustes para telas menores */
 @media (max-width: 768px) {
-    header#header-pagina-web h1 {
-        font-size: 2.2rem;
+    header#header-pagina-web {
+        margin-top: 10px; /* Ajusta margem superior para telas menores */
+        border-radius: 0;
     }
-    header#header-pagina-web p {
-        font-size: 1.1rem;
-    }
-    nav.linktree ul li {
-        display: block;
-        margin: 0.8rem 0;
-    }
-    nav.linktree ul li a,
-    nav.linktree ul li a:link,
-    nav.linktree ul li a:visited {
-        display: block;
-    }
+    header#header-pagina-web h1 { font-size: 2.2rem; }
+    header#header-pagina-web p { font-size: 1.1rem; }
 
-    /* Para telas menores, fazemos o .header-para-pdf e o main ocuparem quase toda a largura */
-    .header-para-pdf,
-    #conteudo-curriculo main {
-        max-width: 100%; /* Ocupa toda a largura disponível menos paddings do pai */
-        margin-left: 10px;  /* Pequena margem para não colar nas bordas */
+    main#main-content {
+        max-width: 100%;
+        margin-left: 10px;
         margin-right: 10px;
         padding-left: 15px;
         padding-right: 15px;
         border-radius: 0;
-        box-sizing: border-box; /* Importante para calc com padding */
     }
-    .header-para-pdf {
-        margin-bottom: 0; /* Main encosta no header do PDF */
-    }
-    #conteudo-curriculo main {
-         /* Margem inferior do main será dada pelo padding-bottom do #conteudo-curriculo */
+    #pagina-container {
+        padding: 10px 0;
     }
 
-    #conteudo-curriculo {
-        padding: 15px 0; /* Padding vertical para #conteudo-curriculo */
-    }
-    h2 {
-        font-size: 1.8rem;
-    }
-    .job h3 {
-        font-size: 1.3rem;
-    }
+    nav.linktree ul li { display: block; margin: 0.8rem 0; }
+    nav.linktree ul li a,
+    nav.linktree ul li a:link,
+    nav.linktree ul li a:visited { display: block; }
+
+    h2 { font-size: 1.8rem; }
+    .job h3 { font-size: 1.3rem; }
 }
