@@ -11,34 +11,38 @@ body {
     padding: 0;
     background-color: #E6E6E6; /* Fundo creme da página web */
     color: #333;
+    display: flex; /* Para ajudar a empurrar o footer para baixo */
+    flex-direction: column; /* Para empurrar o footer para baixo */
+    min-height: 100vh; /* Para empurrar o footer para baixo */
 }
 
 /* Container que será capturado para o PDF */
 #pagina-container {
     background-color: #E6E6E6; /* Fundo creme para a área do PDF */
-    padding-top: 1px; /* Evita colapso de margem do primeiro filho */
+    padding-top: 20px; /* Espaço no topo do container no PDF */
     padding-bottom: 20px; /* Espaço no final do container no PDF */
+    flex-grow: 1; /* Para que o conteúdo principal ocupe o espaço disponível */
 }
 
 header#header-pagina-web {
     background: #1E2F4B;
     color: white;
-    padding: 1.5rem 20px; /* Padding interno */
+    padding: 1.5rem 20px;
     text-align: center;
-    margin: 20px auto 0 auto; /* Margem superior, centraliza, sem margem inferior */
+    margin: 0 auto 20px auto; /* Adicionada margem inferior de 20px AQUI */
     max-width: 900px;
     box-sizing: border-box;
-    border-radius: 8px 8px 0 0; /* Arredonda topo */
+    border-radius: 8px 8px 0 0;
 }
 
 header#header-pagina-web h1 {
     margin: 0;
-    font-size: 2.8rem; /* Tamanho original */
+    font-size: 2.8rem;
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
 }
 
 header#header-pagina-web p {
-    font-size: 1.3rem; /* Tamanho original */
+    font-size: 1.3rem;
     margin-top: 0.5rem;
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
 }
@@ -51,19 +55,25 @@ header#header-pagina-web p {
 main#main-content {
     padding: 25px;
     max-width: 900px;
-    margin: 0 auto; /* Centraliza e encosta no header */
+    margin: 0 auto; /* Agora SÓ centraliza, a margem superior vem do header */
     background-color: white;
     box-shadow: 0 0 15px rgba(0,0,0,0.15);
-    border-radius: 0 0 8px 8px; /* Arredonda base */
+    border-radius: 0 0 8px 8px;
+}
+
+/* Bloco inferior azul contínuo */
+.bloco-inferior-azul {
+    background: #1E2F4B;
+    color: white;
+    width: 100%; /* Ocupa toda a largura */
+    /* margin-top: auto; // Para empurrar para o final se o conteúdo for pouco */
 }
 
 nav.linktree {
-    background: #1E2F4B;
-    color: white;
+    /* background e color herdados de .bloco-inferior-azul */
     padding: 1.5rem;
     text-align: center;
-    /* Removido border-top/bottom para melhor fluxo se for no final */
-    margin-top: 30px; /* Espaço acima do linktree */
+    /* Sem margem superior para grudar no footer, e sem bordas que criariam linhas */
 }
 
 nav.linktree h2 {
@@ -101,12 +111,16 @@ nav.linktree ul li a:focus {
     color: #1E2F4B;
 }
 
-/* Estilos para seções, títulos, etc. permanecem os mesmos */
-section {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px dashed #cccccc;
+footer {
+    /* background e color herdados de .bloco-inferior-azul */
+    text-align: center;
+    padding: 1rem 1.5rem 1.5rem 1.5rem; /* Ajuste de padding para melhor visual com linktree acima */
+    /* Sem margem superior para grudar no linktree */
 }
+
+
+/* Estilos para seções, títulos, etc. permanecem os mesmos */
+section { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px dashed #cccccc; }
 section:last-child { border-bottom: none; }
 h2 { color: #1E2F4B; border-bottom: 3px solid #1E2F4B; padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-size: 2rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
 .job { margin-bottom: 1.8rem; }
@@ -116,24 +130,16 @@ ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkb
 #sobre-mim ul li{ font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 #habilidades ul li { background-color: #f0f0f0; margin-bottom: 8px; padding: 8px 12px; border-radius: 5px; border-left: 4px solid #1E2F4B; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
 
-footer {
-    text-align: center;
-    padding: 1.5rem;
-    background: #1E2F4B;
-    color: white;
-    margin-top: 2rem; /* Margem ajustada */
-}
-
 .botao-download-js {
     display: inline-block;
-    background-color: #1E2F4B;
+    background-color: #1E2F4B; /* Cor do header da página */
     color: white;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
     margin-top: 15px;
-    border: 2px solid #1E2F4B;
+    border: 2px solid white; /* Borda branca para destacar no fundo azul */
     cursor: pointer;
     font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
     font-size: 1rem;
@@ -143,14 +149,17 @@ footer {
 .botao-download-js:hover {
     background-color: white;
     color: #1E2F4B;
-    border: 2px solid #1E2F4B;
+    border: 2px solid white;
 }
 
 /* Ajustes para telas menores */
 @media (max-width: 768px) {
     header#header-pagina-web {
-        margin-top: 10px; /* Ajusta margem superior para telas menores */
+        margin-top: 10px;
         border-radius: 0;
+        max-width: 100%; /* Ocupa toda a largura disponível menos paddings do pai */
+        margin-left: 10px;  /* Pequena margem para não colar nas bordas */
+        margin-right: 10px;
     }
     header#header-pagina-web h1 { font-size: 2.2rem; }
     header#header-pagina-web p { font-size: 1.1rem; }
@@ -171,6 +180,10 @@ footer {
     nav.linktree ul li a,
     nav.linktree ul li a:link,
     nav.linktree ul li a:visited { display: block; }
+
+    .bloco-inferior-azul {
+        /* Nenhum ajuste específico necessário aqui para largura, pois já é 100% */
+    }
 
     h2 { font-size: 1.8rem; }
     .job h3 { font-size: 1.3rem; }
