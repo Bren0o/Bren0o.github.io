@@ -7,31 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="header-pagina-web">
-        <h1>Breno Caldas</h1>
-        <p>Análise e Desenvolvimento de Sistemas | Assessor de Gestão</p>
-        <button id="botaoGerarPdf" class="botao-download-js">
-            Baixar Currículo (PDF)
-        </button>
-    </header>
+    <!-- Container principal para o conteúdo da página (exceto linktree e footer) -->
+    <div id="pagina-container">
 
-    <nav class="linktree">
-        <h2>Meus Links</h2>
-        <ul>
-            <li><a href="mailto:breno.caldas2001@gmail.com" target="_blank">📧 Email</a></li>
-            <li><a href="https://wa.me/5511945841457" target="_blank">💬 WhatsApp</a></li>
-        </ul>
-    </nav>
-
-    <!-- INÍCIO DA ÁREA DO CURRÍCULO PARA PDF -->
-    <div id="conteudo-curriculo">
-        <!-- Cabeçalho que aparecerá NO PDF - INICIALMENTE OCULTO NA PÁGINA WEB -->
-        <div class="header-para-pdf oculto-na-pagina">
+        <!-- Header da página web - AGORA DENTRO DO CONTAINER DO PDF -->
+        <header id="header-pagina-web">
             <h1>Breno Caldas</h1>
             <p>Análise e Desenvolvimento de Sistemas | Assessor de Gestão</p>
-        </div>
+            <!-- O botão de download será oculto no PDF via CSS -->
+            <button id="botaoGerarPdf" class="botao-download-js">
+                Baixar Currículo (PDF)
+            </button>
+        </header>
 
-        <main>
+        <!-- Conteúdo principal do currículo -->
+        <main id="main-content">
             <section id="sobre-mim">
                 <h2>Sobre Mim</h2>
                 <p>Olá! Sou Breno, tenho 23 anos e sou apaixonado por tecnologia e análise de dados. Atualmente, busco aplicar e expandir meus conhecimentos em Análise e Desenvolvimento de Sistemas.</p>
@@ -89,8 +79,17 @@
                 </ul>
             </section>
         </main>
-    </div>
-    <!-- FIM DA ÁREA DO CURRÍCULO PARA PDF -->
+
+    </div> <!-- Fim do #pagina-container -->
+
+    <!-- Meus Links movido para antes do footer -->
+    <nav class="linktree">
+        <h2>Meus Links</h2>
+        <ul>
+            <li><a href="mailto:breno.caldas2001@gmail.com" target="_blank">📧 Email</a></li>
+            <li><a href="https://wa.me/5511945841457" target="_blank">💬 WhatsApp</a></li>
+        </ul>
+    </nav>
 
     <footer>
         <p>© 2024 Breno Caldas. Todos os direitos reservados.</p>
