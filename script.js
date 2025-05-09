@@ -10,62 +10,53 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function gerarPDF() {
-    const elementoParaPdf = document.getElementById('pdf-content-area');
-    const headerParaPdf = document.querySelector('.header-para-pdf');
+    const areaDeCaptura = document.getElementById('pdf-capture-area');
+    const mainOriginal = document.getElementById('main-pagina-web');
+    const copiaMainParaPdf = document.getElementById('main-content-pdf-copy');
 
-    if (!elementoParaPdf) {
-        console.error("Elemento com ID 'pdf-content-area' não encontrado.");
-        alert("Erro: Não foi possível encontrar o conteúdo para gerar o PDF.");
+    if (!areaDeCaptura || !mainOriginal || !copiaMainParaPdf) {
+        console.error("Um ou mais elementos necessários para o PDF não foram encontrados.");
+        alert("Erro ao preparar o conteúdo para o PDF.");
         return;
     }
-    if (!headerParaPdf) {
-        console.error("Elemento '.header-para-pdf' não encontrado.");
-        // Pode prosseguir, mas o PDF não terá o header azul.
-    }
 
-    // Mostrar o header do PDF para a captura
-    if (headerParaPdf) {
-        headerParaPdf.classList.remove('oculto-na-pagina');
-        headerParaPdf.classList.add('mostrar-para-pdf');
-    }
+    // 1. Clonar o conteúdo do main da página para a área de captura do PDF
+    copiaMainParaPdf.innerHTML = mainOriginal.innerHTML;
 
-    const larguraDeCapturaPx = 900; // A max-width do seu conteúdo
+    // 2. Tornar a área de captura visível (mas ainda fora da tela) para html2canvas
+    areaDeCaptura.style.display = 'block';
+    // O position absolute e left/top negativos já a mantêm fora da viewport.
 
-    // Salvar estilos originais do container para restauração
-    const larguraOriginalContainer = elementoParaPdf.style.width;
-    const marginLeftOriginalContainer = elementoParaPdf.style.marginLeft;
-    const marginRightOriginalContainer = elementoParaPdf.style.marginRight;
+    const larguraDeCapturaPx = 900; // A largura desejada para o conteúdo no PDF
 
-    // Forçar o container a ter a largura exata e centralização para a captura
-    elementoParaPdf.style.width = larguraDeCapturaPx + 'px';
-    elementoParaPdf.style.marginLeft = 'auto';
-    elementoParaPdf.style.marginRight = 'auto';
-
+    // 3. Aplicar largura à área de captura para que html2canvas use isso
+    const larguraOriginalAreaCaptura = areaDeCaptura.style.width;
+    areaDeCaptura.style.width = larguraDeCapturaPx + 'px';
+    // Os filhos (.header-para-pdf e #main-content-pdf-copy) devem se ajustar a esta largura.
+    // O .header-para-pdf não precisa de max-width e margin:auto se o pai já tem a largura certa.
+    // O #main-content-pdf-copy também. Vamos remover max-width e margin:auto deles no CSS
+    // quando estão dentro de #pdf-capture-area.
 
     const options = {
         scale: 2,
         useCORS: true,
         logging: true,
-        backgroundColor: '#FFFFFF', // FORÇAR FUNDO BRANCO PARA O CANVAS
-        width: larguraDeCapturaPx,
-        windowWidth: larguraDeCapturaPx,
-        height: elementoParaPdf.scrollHeight, // Captura toda a altura do conteúdo + paddings
-        windowHeight: elementoParaPdf.scrollHeight,
-        x: 0, // Captura a partir da borda esquerda do container redimensionado
+        backgroundColor: '#FFFFFF', // FORÇAR FUNDO BRANCO PARA O CANVAS DO PDF
+        width: larguraDeCapturaPx,       // Largura da captura
+        windowWidth: larguraDeCapturaPx, // Simula janela desta largura
+        x: 0, // Captura a partir da borda esquerda da areaDeCaptura (que tem 900px)
+        // A altura será determinada pelo conteúdo clonado + header-para-pdf
+        // O scrollHeight da areaDeCaptura agora deve ser o correto.
+        height: areaDeCaptura.scrollHeight,
+        windowHeight: areaDeCaptura.scrollHeight,
         removeContainer: false
     };
 
-    html2canvas(elementoParaPdf, options).then(canvas => {
-        // Restaurar estilos do container
-        elementoParaPdf.style.width = larguraOriginalContainer;
-        elementoParaPdf.style.marginLeft = marginLeftOriginalContainer;
-        elementoParaPdf.style.marginRight = marginRightOriginalContainer;
-
-        // Ocultar o header do PDF novamente
-        if (headerParaPdf) {
-            headerParaPdf.classList.remove('mostrar-para-pdf');
-            headerParaPdf.classList.add('oculto-na-pagina');
-        }
+    html2canvas(areaDeCaptura, options).then(canvas => {
+        // 4. Limpar e ocultar a área de captura
+        copiaMainParaPdf.innerHTML = ''; // Limpa o conteúdo clonado
+        areaDeCaptura.style.display = 'none';
+        areaDeCaptura.style.width = larguraOriginalAreaCaptura; // Restaura largura original se houver
 
         const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
@@ -92,21 +83,15 @@ function gerarPDF() {
             pdf.addImage(imgData, 'PNG', 0, -currentPositionInImage, scaledImgWidth, scaledImgHeight);
             currentPositionInImage += pdfPageHeight;
             pageCount++;
-            if (currentPositionInImage >= scaledImgHeight - 5) break; // Pequena tolerância
+            if (currentPositionInImage >= scaledImgHeight - 5) break;
         }
 
         pdf.save('Curriculo_Breno_Caldas.pdf');
 
     }).catch(error => {
-        // Restaurar estilos do container em caso de erro
-        elementoParaPdf.style.width = larguraOriginalContainer;
-        elementoParaPdf.style.marginLeft = marginLeftOriginalContainer;
-        elementoParaPdf.style.marginRight = marginRightOriginalContainer;
-
-        if (headerParaPdf) {
-            headerParaPdf.classList.remove('mostrar-para-pdf');
-            headerParaPdf.classList.add('oculto-na-pagina');
-        }
+        copiaMainParaPdf.innerHTML = '';
+        areaDeCaptura.style.display = 'none';
+        areaDeCaptura.style.width = larguraOriginalAreaCaptura;
         console.error("Erro ao gerar PDF com html2canvas:", error);
         alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
     });
