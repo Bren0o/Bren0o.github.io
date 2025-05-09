@@ -1,4 +1,4 @@
-// script.js
+// script.js (SEM MUDANÇAS)
 
 document.addEventListener('DOMContentLoaded', function() {
     const botaoGerar = document.getElementById('botaoGerarPdf');
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function gerarPDF() {
-    const elementoParaPdf = document.getElementById('pagina-container'); // Alvo da captura!
+    const elementoParaPdf = document.getElementById('pagina-container');
 
     if (!elementoParaPdf) {
         console.error("Elemento com ID 'pagina-container' não encontrado.");
@@ -18,30 +18,20 @@ function gerarPDF() {
         return;
     }
 
-    // Adiciona uma classe ao body para ocultar o botão de download durante a captura
     document.body.classList.add('gerando-pdf');
 
     const options = {
         scale: 2,
         useCORS: true,
         logging: true,
-        backgroundColor: '#E6E6E6', // Fundo do canvas
-        // Permitir que html2canvas tente determinar as dimensões de #pagina-container
-        // É crucial que #pagina-container e seus filhos (#header-pagina-web e #main-content)
-        // estejam dimensionados corretamente com CSS para que a captura fique boa.
-        // As opções width/height podem ser usadas se a detecção automática falhar.
-        // width: elementoParaPdf.scrollWidth,
-        // height: elementoParaPdf.scrollHeight,
-        // windowWidth: elementoParaPdf.scrollWidth,
-        // windowHeight: elementoParaPdf.scrollHeight
+        backgroundColor: '#E6E6E6',
     };
 
     html2canvas(elementoParaPdf, options).then(canvas => {
-        // Remove a classe após a captura
         document.body.classList.remove('gerando-pdf');
 
         const imgData = canvas.toDataURL('image/png');
-        const { jsPDF } = window.jspdf; // Certifique-se que jsPDF está carregado
+        const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({
             orientation: 'portrait',
             unit: 'pt',
@@ -71,7 +61,6 @@ function gerarPDF() {
         pdf.save('Curriculo_Breno_Caldas.pdf');
 
     }).catch(error => {
-        // Remove a classe em caso de erro também
         document.body.classList.remove('gerando-pdf');
         console.error("Erro ao gerar PDF com html2canvas:", error);
         alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
