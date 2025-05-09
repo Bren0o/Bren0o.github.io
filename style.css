@@ -5,34 +5,57 @@ COR_DEMAIS_INFOS = 'white'
 */
 
 body {
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Comic Sans com alternativas */
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #E6E6E6; /* COR_BRANCO_CREME_FUNDO */
-    color: #333; /* Cor de texto padrão para conteúdo no fundo branco/creme */
+    background-color: #E6E6E6; /* Fundo creme da página web */
+    color: #333;
 }
 
-header {
-    background: #1E2F4B; /* COR_AZUL_ESCURO_TITULO */
-    color: white; /* COR_DEMAIS_INFOS - para texto no header */
+/* Header da página web (não vai para o PDF) */
+header#header-pagina-web {
+    background: #1E2F4B;
+    color: white;
     padding: 1.5rem 0;
     text-align: center;
 }
 
-header h1 {
+header#header-pagina-web h1 {
     margin: 0;
     font-size: 2.8rem;
 }
 
-header p {
+header#header-pagina-web p {
     font-size: 1.3rem;
     margin-top: 0.5rem;
 }
 
+/* Estilo para o cabeçalho que aparecerá DENTRO do PDF */
+.header-para-pdf {
+    background: #1E2F4B; /* Fundo azul para o header no PDF */
+    color: white; /* Texto branco para o header no PDF */
+    padding: 1.5rem 20px; /* Padding interno */
+    text-align: center;
+    margin-bottom: 20px; /* Espaço antes do conteúdo <main> no PDF */
+}
+
+.header-para-pdf h1 {
+    margin: 0;
+    font-size: 2.5rem; /* Pode ser um pouco menor para o PDF */
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Garante a fonte */
+}
+
+.header-para-pdf p {
+    font-size: 1.2rem; /* Pode ser um pouco menor para o PDF */
+    margin-top: 0.5rem;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Garante a fonte */
+}
+
+
 nav.linktree {
-    background: #1E2F4B; /* COR_AZUL_ESCURO_TITULO */
-    color: white; /* COR_DEMAIS_INFOS - para texto no linktree (como o H2) */
+    background: #1E2F4B;
+    color: white;
     padding: 1.5rem;
     text-align: center;
     border-top: 2px solid #E6E6E6;
@@ -43,6 +66,7 @@ nav.linktree h2 {
     margin-top: 0;
     margin-bottom: 1rem;
     font-size: 1.8rem;
+    color: white; /* Para garantir que "Meus Links" apareça */
 }
 
 nav.linktree ul {
@@ -73,11 +97,18 @@ nav.linktree ul li a:focus {
     color: #1E2F4B;
 }
 
-main {
+/* Área que será capturada para o PDF */
+#conteudo-curriculo {
+    background-color: #E6E6E6; /* Fundo creme PARA O PDF */
+    /* Adiciona um padding para que o fundo creme apareça ao redor do conteúdo main, se desejado */
+    padding: 20px; /* Ajuste conforme necessário, ou remova se não quiser margens cremes no PDF */
+}
+
+#conteudo-curriculo main { /* O <main> dentro da área do PDF */
     padding: 25px;
-    max-width: 900px;
-    margin: 30px auto;
-    background-color: white;
+    max-width: 900px; /* Ou a largura desejada para o conteúdo dentro do PDF */
+    margin: 0 auto; /* Centraliza o <main> dentro do #conteudo-curriculo */
+    background-color: white; /* Fundo branco para as seções do currículo */
     box-shadow: 0 0 15px rgba(0,0,0,0.15);
     border-radius: 8px;
 }
@@ -92,12 +123,14 @@ section:last-child {
     border-bottom: none;
 }
 
+/* Estilo para os títulos H2 das seções */
 h2 {
-    color: #1E2F4B;
+    color: #1E2F4B; /* Cor azul para os títulos H2 */
     border-bottom: 3px solid #1E2F4B;
     padding-bottom: 0.5rem;
     margin-bottom: 1.5rem;
     font-size: 2rem;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Garante a fonte */
 }
 
 .job {
@@ -106,20 +139,27 @@ h2 {
 
 .job h3 {
     margin-bottom: 0.3rem;
-    color: #1E2F4B;
+    color: #1E2F4B; /* Cor azul para os H3 */
     font-size: 1.4rem;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Garante a fonte */
 }
 
 .job p {
     margin-top: 0.4rem;
     margin-bottom: 0.4rem;
-    color: #555;
+    color: #555; /* Cor para o texto descritivo */
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Garante a fonte */
 }
 
-ul {
+ul { /* Estilo geral para listas */
     list-style: disc;
     padding-left: 25px;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Garante a fonte */
 }
+#sobre-mim ul li{
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Garante a fonte */
+}
+
 
 #habilidades ul li {
     background-color: #f0f0f0;
@@ -127,6 +167,7 @@ ul {
     padding: 8px 12px;
     border-radius: 5px;
     border-left: 4px solid #1E2F4B;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Garante a fonte */
 }
 
 footer {
@@ -137,41 +178,37 @@ footer {
     margin-top: 3rem;
 }
 
-/* Estilo para o botão de download gerado por JS */
 .botao-download-js {
     display: inline-block;
-    background-color: #1E2F4B; /* Sua cor azul escuro */
+    background-color: #1E2F4B;
     color: white;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
     margin-top: 15px;
-    border: 2px solid #1E2F4B; /* Borda da mesma cor do fundo */
-    cursor: pointer; /* Indica que é clicável */
-    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Mantém a fonte */
-    font-size: 1rem; /* Tamanho da fonte do botão */
+    border: 2px solid #1E2F4B;
+    cursor: pointer;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
+    font-size: 1rem;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .botao-download-js:hover {
     background-color: white;
     color: #1E2F4B;
-    border: 2px solid #1E2F4B; /* Borda visível no hover */
+    border: 2px solid #1E2F4B;
 }
 
-/* Classe para ocultar elementos durante a geração do PDF */
-.ocultar-no-pdf {
+.ocultar-no-pdf { /* Não estamos usando esta classe por enquanto com esta abordagem */
     display: none !important;
 }
 
-
-/* Ajustes para telas menores (Responsividade básica) */
 @media (max-width: 768px) {
-    header h1 {
+    header#header-pagina-web h1 {
         font-size: 2.2rem;
     }
-    header p {
+    header#header-pagina-web p {
         font-size: 1.1rem;
     }
     nav.linktree ul li {
@@ -183,10 +220,13 @@ footer {
     nav.linktree ul li a:visited {
         display: block;
     }
-    main {
+    #conteudo-curriculo main {
         padding: 15px;
-        margin: 15px;
+        margin: 0 10px 15px 10px; /* Ajuste para telas menores, sem margem superior dentro de #conteudo-curriculo */
         border-radius: 0;
+    }
+     #conteudo-curriculo {
+        padding: 10px 0; /* Padding menor para #conteudo-curriculo em telas pequenas, sem padding lateral */
     }
     h2 {
         font-size: 1.8rem;
