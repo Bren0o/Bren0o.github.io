@@ -11,36 +11,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function gerarPDF() {
     const areaDeCaptura = document.getElementById('pdf-capture-area');
-    const mainOriginal = document.getElementById('main-pagina-web');
-    const copiaMainParaPdf = document.getElementById('main-content-pdf-copy');
+    const mainOriginal = document.getElementById('main-pagina-web'); // Conteúdo da página
+    const copiaMainParaPdf = document.getElementById('main-content-pdf-copy'); // Onde clonar dentro da área de captura
+    const headerParaPdfVisivel = document.querySelector('#pdf-capture-area .header-conteudo-pdf'); // O header azul para o PDF
 
-    if (!areaDeCaptura || !mainOriginal || !copiaMainParaPdf) {
-        console.error("Um ou mais elementos necessários para o PDF não foram encontrados.");
-        alert("Erro ao preparar o conteúdo para o PDF.");
+    if (!areaDeCaptura || !mainOriginal || !copiaMainParaPdf || !headerParaPdfVisivel) {
+        console.error("Um ou mais elementos críticos para o PDF não foram encontrados. Verifique os IDs e classes.");
+        alert("Erro ao preparar o conteúdo para o PDF. Verifique o console.");
         return;
     }
 
+    // 1. Clonar o conteúdo do main da página para a área de captura do PDF
     copiaMainParaPdf.innerHTML = mainOriginal.innerHTML;
-    areaDeCaptura.style.display = 'block';
 
-    const larguraDeCapturaPx = 900;
+    // 2. Tornar a área de captura e seu header visíveis (mas fora da tela)
+    areaDeCaptura.style.display = 'block';
+    // O CSS de #pdf-capture-area já a posiciona fora da tela.
+
+    const larguraDeCapturaPx = 900; // Largura desejada do conteúdo no PDF
+
+    // 3. Aplicar largura à área de captura para que html2canvas use isso
     const larguraOriginalAreaCaptura = areaDeCaptura.style.width;
     areaDeCaptura.style.width = larguraDeCapturaPx + 'px';
+    // Os filhos .header-para-pdf e #main-content-pdf-copy devem se ajustar a esta largura.
 
     const options = {
-        scale: 2, // Manter a escala para boa qualidade da captura inicial
+        scale: 1.5, // Tentar 1.5 para equilíbrio entre qualidade e tamanho
         useCORS: true,
         logging: true,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FFFFFF', // FUNDO DO CANVAS DO PDF SERÁ BRANCO
         width: larguraDeCapturaPx,
         windowWidth: larguraDeCapturaPx,
-        height: areaDeCaptura.scrollHeight,
-        windowHeight: areaDeCaptura.scrollHeight,
         x: 0,
+        height: areaDeCaptura.scrollHeight, // Captura toda a altura calculada da área
+        windowHeight: areaDeCaptura.scrollHeight,
         removeContainer: false
     };
 
     html2canvas(areaDeCaptura, options).then(canvas => {
+        // 4. Limpar e ocultar a área de captura
         copiaMainParaPdf.innerHTML = '';
         areaDeCaptura.style.display = 'none';
         areaDeCaptura.style.width = larguraOriginalAreaCaptura;
@@ -50,40 +59,34 @@ function gerarPDF() {
         const pdf = new jsPDF({
             orientation: 'portrait',
             unit: 'pt',
-            format: 'a4' // Formato da página do PDF
+            format: 'a4'
         });
 
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfPageHeight = pdf.internal.pageSize.getHeight(); // Altura útil de uma página A4
+        const pdfPageHeight = pdf.internal.pageSize.getHeight();
         const imgProps = pdf.getImageProperties(imgData);
 
-        // Calcular dimensões da imagem para caber na LARGURA do PDF, mantendo proporção
         let scaledImgWidth = pdfWidth;
         let scaledImgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-        // VERIFICAR SE A ALTURA ESCALADA EXCEDE A ALTURA DA PÁGINA DO PDF
+        // Lógica para tentar caber em uma página, se possível, ou permitir múltiplas
         if (scaledImgHeight > pdfPageHeight) {
-            console.warn("Conteúdo capturado é mais alto que uma página A4. Redimensionando para caber...");
-            // Se for mais alto, recalcular a LARGURA para caber na ALTURA da página, mantendo proporção
-            scaledImgWidth = (imgProps.width * pdfPageHeight) / imgProps.height;
-            scaledImgHeight = pdfPageHeight; // Força a altura a ser a da página
+            console.log("Conteúdo excede uma página, será dividido.");
+            let currentPositionInImage = 0;
+            let pageCount = 0;
+            while(currentPositionInImage < scaledImgHeight) {
+                if (pageCount > 0) {
+                    pdf.addPage();
+                }
+                pdf.addImage(imgData, 'PNG', 0, -currentPositionInImage, scaledImgWidth, scaledImgHeight);
+                currentPositionInImage += pdfPageHeight;
+                pageCount++;
+                if (currentPositionInImage >= scaledImgHeight - 5) break;
+            }
+        } else {
+            // Cabe em uma página
+            pdf.addImage(imgData, 'PNG', 0, 0, scaledImgWidth, scaledImgHeight);
         }
-
-        // Centralizar a imagem na página do PDF se ela for mais estreita que a página
-        let offsetX = (pdfWidth - scaledImgWidth) / 2;
-        if (offsetX < 0) offsetX = 0; // Garante que não seja negativo
-
-        // Adicionar a imagem UMA ÚNICA VEZ, redimensionada para caber
-        pdf.addImage(imgData, 'PNG', offsetX, 0, scaledImgWidth, scaledImgHeight);
-
-        // REMOVER a lógica de múltiplas páginas
-        /*
-        let currentPositionInImage = 0;
-        let pageCount = 0;
-        while(currentPositionInImage < scaledImgHeight) {
-            // ...
-        }
-        */
 
         pdf.save('Curriculo_Breno_Caldas.pdf');
 
