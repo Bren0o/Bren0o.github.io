@@ -185,28 +185,29 @@ footer {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.botao-download:hover {
-    background-color: white;
-    color: #1E2F4B;
-    border: 2px solid #1E2F4B;
-}
-
-/* Se você colocou o botão no linktree, pode querer um estilo que combine com os outros botões de lá */
-/* Se usar a classe 'botao-linktree-download' para o botão no linktree: */
-.botao-linktree-download {
-    /* Você pode copiar os estilos de nav.linktree ul li a e ajustar se necessário,
-       ou garantir que ele se encaixe bem com os outros itens <li><a> */
+.botao-download-js {
+    display: inline-block;
+    background-color: #1E2F4B; /* Sua cor azul escuro */
     color: white;
+    padding: 10px 20px;
     text-decoration: none;
-    padding: 0.7rem 1.5rem;
-    border: 2px solid white;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
     font-weight: bold;
-    display: inline-block; /* Para que se comporte como os outros botões do linktree */
+    margin-top: 15px;
+    border: 2px solid #1E2F4B; /* Borda da mesma cor do fundo */
+    cursor: pointer; /* Indica que é clicável */
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; /* Mantém a fonte */
+    font-size: 1rem; /* Tamanho da fonte do botão */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.botao-linktree-download:hover {
+.botao-download-js:hover {
     background-color: white;
     color: #1E2F4B;
+    border: 2px solid #1E2F4B; /* Borda visível no hover */
+}
+
+/* Classe para ocultar elementos durante a geração do PDF */
+.ocultar-no-pdf {
+    display: none !important;
 }
