@@ -2,7 +2,7 @@
 :root {
     --cor-azul-escuro: #1E2F4B;
     --cor-branco-creme-pagina: #E6E6E6; /* Fundo da página web */
-    --cor-branco-conteudo: #FFFFFF;     /* Fundo do conteúdo principal na web e no PDF */
+    --cor-branco-pdf: #FFFFFF;         /* Fundo da área de captura do PDF e do main no PDF */
     --cor-texto-claro: white;
     --cor-texto-escuro: #333;
 }
@@ -19,65 +19,81 @@ body {
     min-height: 100vh;
 }
 
-/* Header da PÁGINA WEB */
-header#header-pagina-web {
+/* Header visível na página web */
+header#header-pagina-web-visivel {
     background: var(--cor-azul-escuro);
     color: var(--cor-texto-claro);
     padding: 1.5rem 20px; /* Padding interno */
     text-align: center;
-    margin: 20px auto 0 auto; /* Margem superior, centralizado, sem margem inferior */
+    margin: 20px auto 0 auto; /* Margem superior, centralizado, SEM margem inferior */
     max-width: 900px;         /* LARGURA MÁXIMA DEFINIDA */
     box-sizing: border-box;
     border-radius: 8px 8px 0 0;
 }
-header#header-pagina-web h1 { margin: 0; font-size: 2.8rem; }
-header#header-pagina-web p { font-size: 1.3rem; margin-top: 0.5rem; }
+header#header-pagina-web-visivel h1 { margin: 0; font-size: 2.8rem; }
+header#header-pagina-web-visivel p { font-size: 1.3rem; margin-top: 0.5rem; }
+.botao-download-js { /* Estilo do botão de download na página */
+    display: inline-block; background-color: transparent; color: var(--cor-texto-claro); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: 2px solid var(--cor-texto-claro); cursor: pointer; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; font-size: 1rem; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.botao-download-js:hover { background-color: var(--cor-texto-claro); color: var(--cor-azul-escuro); border-color: var(--cor-texto-claro); }
 
-/* Main da PÁGINA WEB */
-main#main-pagina-web {
-    padding: 25px;
-    max-width: 900px;
-    margin: 0 auto 30px auto; /* Centralizado, margem inferior para separar do bloco azul */
-    background-color: var(--cor-branco-conteudo); /* FUNDO BRANCO PARA O CONTEÚDO */
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    border-radius: 0 0 8px 8px;
+
+/* Container que será efetivamente capturado para o PDF */
+#pagina-container-para-pdf {
+    /* Este container não precisa de fundo visível na PÁGINA,
+       pois o .header-conteudo-pdf e o main-content terão seus fundos.
+       Para o PDF, o html2canvas será instruído a usar fundo branco. */
+    padding-top: 1px; /* Mínimo para evitar colapso de margem */
+    padding-bottom: 40px; /* Espaço extra NO FINAL DO CONTEÚDO DO PDF, o fundo será branco */
+    width: 100%; /* Ocupa a largura para permitir centralização dos filhos */
     box-sizing: border-box;
-    flex-grow: 1; /* Faz o main crescer para empurrar o bloco azul para baixo */
+    /* flex-grow: 1; // Removido, o main da página cuidará disso */
 }
 
-/* --- Estilos para os elementos DENTRO da área de captura do PDF --- */
-#pdf-capture-area {
-    background-color: var(--cor-branco-conteudo); /* FUNDO DO PDF SERÁ BRANCO */
-    padding: 20px; /* Um padding interno para a área de captura, se necessário */
-    /* A largura será definida pelo JS antes da captura */
-}
-
-.header-para-pdf { /* Header que aparece no PDF */
-    background: var(--cor-azul-escuro);
+/* Header que será incluído DENTRO do PDF */
+.header-conteudo-pdf {
+    background: var(--cor-azul-escuro); /* FUNDO AZUL PARA ESTE HEADER */
     color: var(--cor-texto-claro);
     padding: 1.5rem 20px;
     text-align: center;
-    margin-bottom: 20px; /* Espaço antes do main-content-pdf-copy */
-    /* max-width e margin:auto não são necessários aqui, pois o pai #pdf-capture-area terá a largura certa */
-    border-radius: 8px 8px 0 0; /* Mantém o visual */
+    margin: 0 auto 20px auto; /* MARGEM INFERIOR DE 20PX PARA SEPARAR DO MAIN */
+    max-width: 900px;         /* LARGURA MÁXIMA IGUAL AO MAIN */
+    box-sizing: border-box;
+    border-radius: 8px 8px 0 0;
 }
-.header-para-pdf h1 { margin: 0; font-size: 2.8rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
-.header-para-pdf p { font-size: 1.3rem; margin-top: 0.5rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
+.header-conteudo-pdf h1 { margin: 0; font-size: 2.8rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
+.header-conteudo-pdf p { font-size: 1.3rem; margin-top: 0.5rem; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
 
-#main-content-pdf-copy {
-    background-color: var(--cor-branco-conteudo); /* Garante fundo branco */
-    padding: 25px; /* Replica o padding do main original */
-    border-radius: 0 0 8px 8px; /* Replica o border-radius */
-    /* A sombra não é necessária aqui, pois é para o PDF */
+/* Classes para controlar visibilidade */
+.oculto-na-pagina { display: none !important; }
+.mostrar-para-pdf { display: block !important; }
+
+/* Main da PÁGINA WEB (conteúdo visível no navegador) */
+main#main-pagina-web {
+    padding: 25px;
+    max-width: 900px;
+    margin: 0 auto 30px auto; /* Centralizado, margem inferior */
+    background-color: var(--cor-branco-conteudo); /* FUNDO BRANCO */
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 0 0 8px 8px; /* Continua o radius do header da página */
+    box-sizing: border-box;
+    flex-grow: 1;
 }
-/* Importante: Os estilos das seções, h2, job, etc., DENTRO de #main-content-pdf-copy
-   serão herdados dos estilos globais ou você pode precisar de seletores mais específicos
-   se quiser que eles sejam diferentes no PDF vs Web.
-   Para simplificar, vamos assumir que os estilos globais são suficientes. */
+
+/* Cópia do Main para o PDF (estilizado dentro de #pdf-capture-area) */
+#pdf-capture-area main#main-content { /* Renomeado o ID do main dentro do container de captura para evitar conflito */
+    padding: 25px;
+    max-width: 900px; /* GARANTE MESMA LARGURA DO HEADER DO PDF */
+    margin: 0 auto;   /* Centraliza */
+    background-color: var(--cor-branco-conteudo); /* FUNDO BRANCO */
+    box-shadow: 0 0 15px rgba(0,0,0,0.1); /* Sombra sutil no PDF também */
+    border-radius: 0 0 8px 8px;
+    box-sizing: border-box;
+}
 
 
 /* Bloco inferior com links e footer */
-.bloco-inferior-azul { background: var(--cor-azul-escuro); color: var(--cor-texto-claro); width: 100%; margin-top: auto; /* Empurra para o final */ }
+.bloco-inferior-azul { background: var(--cor-azul-escuro); color: var(--cor-texto-claro); width: 100%; margin-top: auto; }
 nav.linktree { padding: 1.5rem; text-align: center; }
 nav.linktree h2 { margin-top: 0; margin-bottom: 1rem; font-size: 1.8rem; color: var(--cor-texto-claro); }
 nav.linktree ul { list-style: none; padding: 0; }
@@ -100,14 +116,10 @@ ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkb
 #sobre-mim ul li{ font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; }
 #habilidades ul li { background-color: #f0f0f0; margin-bottom: 8px; padding: 8px 12px; border-radius: 5px; border-left: 4px solid var(--cor-azul-escuro); font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;}
 
-/* Botão de download */
-.botao-download-js { display: inline-block; background-color: transparent; color: var(--cor-texto-claro); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: 2px solid var(--cor-texto-claro); cursor: pointer; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive; font-size: 1rem; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
-.botao-download-js:hover { background-color: var(--cor-texto-claro); color: var(--cor-azul-escuro); border-color: var(--cor-texto-claro); }
-
 /* Media Queries */
 @media (max-width: 768px) {
-    header#header-pagina-web,
-    main#main-pagina-web { /* Aplicando responsividade ao header e main da página web */
+    header#header-pagina-web, /* Aplicando ao header da web */
+    main#main-pagina-web {    /* Aplicando ao main da web */
         max-width: calc(100% - 20px);
         margin-left: auto;
         margin-right: auto;
@@ -119,7 +131,19 @@ ul { list-style: disc; padding-left: 25px; font-family: 'Comic Sans MS', 'Chalkb
     header#header-pagina-web h1 { font-size: 2.2rem; }
     header#header-pagina-web p { font-size: 1.1rem; }
 
-    /* Para o conteúdo do PDF em telas menores, o JS definirá a largura de captura */
+    /* Para o conteúdo DENTRO da área de captura do PDF em telas menores */
+    #pdf-capture-area .header-conteudo-pdf,
+    #pdf-capture-area main#main-content { /* O ID do main DENTRO do #pdf-capture-area */
+        max-width: 100%; /* Ocupa a largura do #pdf-capture-area (que será 900px via JS) */
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 15px; /* Padding interno menor */
+        padding-right: 15px;
+        border-radius: 0;
+    }
+    #pdf-capture-area .header-conteudo-pdf { margin-bottom: 15px; }
+    #pdf-capture-area { padding: 10px 0 40px 0; } /* Padding vertical menor, sem padding lateral */
+
 
     nav.linktree ul li { display: block; margin: 0.8rem 0; }
     nav.linktree ul li a,
