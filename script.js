@@ -20,12 +20,6 @@ function gerarPDF() {
         return;
     }
 
-    // Adiciona uma classe ao botão para ocultá-lo temporariamente (se ele estiver dentro do elementoCurriculo)
-    // Neste exemplo, o botão está fora, então não precisamos ocultá-lo desta forma.
-    // Se o botão estivesse DENTRO de 'conteudo-curriculo', você faria:
-    // if (botaoGerar) botaoGerar.classList.add('ocultar-no-pdf');
-
-
     // Opções para html2canvas
     const options = {
         scale: 2, // Aumenta a resolução da imagem gerada
@@ -42,7 +36,7 @@ function gerarPDF() {
 
         // Inicializa jsPDF
         // A biblioteca jsPDF está disponível globalmente como `jspdf.jsPDF`
-        const { jsPDF } = window.jspdf;
+        const { jsPDF } = window.jspdf; // Esta linha deve funcionar agora que jsPDF carrega
         const pdf = new jsPDF({
             orientation: 'portrait',
             unit: 'pt', // Pontos como unidade
@@ -74,13 +68,8 @@ function gerarPDF() {
 
         pdf.save('Curriculo_Breno_Caldas.pdf');
 
-        // Reexibir o botão se ele foi oculto
-        // if (botaoGerar) botaoGerar.classList.remove('ocultar-no-pdf');
-
     }).catch(error => {
         console.error("Erro ao gerar PDF com html2canvas:", error);
         alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
-        // Reexibir o botão se ele foi oculto, mesmo em caso de erro
-        // if (botaoGerar) botaoGerar.classList.remove('ocultar-no-pdf');
     });
 }
