@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function gerarPDF() {
     const elementoCurriculo = document.getElementById('conteudo-curriculo');
-    const botaoGerar = document.getElementById('botaoGerarPdf'); // Referência ao botão
+    // O botão de download da página web (#botaoGerarPdf) está FORA de #conteudo-curriculo,
+    // então não precisamos nos preocupar em ocultá-lo para a captura do PDF.
 
     if (!elementoCurriculo) {
         console.error("Elemento com ID 'conteudo-curriculo' não encontrado.");
@@ -25,44 +26,42 @@ function gerarPDF() {
         scale: 2, // Aumenta a resolução da imagem gerada
         useCORS: true, // Necessário se houver imagens de outras origens
         logging: true, // Ajuda a depurar problemas com html2canvas
-        width: elementoCurriculo.scrollWidth, // Usa a largura total do conteúdo
-        height: elementoCurriculo.scrollHeight, // Usa a altura total do conteúdo
-        windowWidth: elementoCurriculo.scrollWidth,
+        backgroundColor: '#E6E6E6', // Define explicitamente o fundo do canvas para o creme
+        // Tentar usar as dimensões de rolagem do elemento pode ser mais preciso
+        width: elementoCurriculo.scrollWidth,
+        height: elementoCurriculo.scrollHeight,
+        windowWidth: elementoCurriculo.scrollWidth, // Ajuda com elementos que dependem da largura da janela
         windowHeight: elementoCurriculo.scrollHeight
     };
 
     html2canvas(elementoCurriculo, options).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
 
-        // Inicializa jsPDF
-        // A biblioteca jsPDF está disponível globalmente como `jspdf.jsPDF`
-        const { jsPDF } = window.jspdf; // Esta linha deve funcionar agora que jsPDF carrega
+        const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({
             orientation: 'portrait',
-            unit: 'pt', // Pontos como unidade
-            format: 'a4' // Formato A4
+            unit: 'pt',
+            format: 'a4'
         });
 
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
 
-        // Calcula a proporção da imagem para caber na largura do PDF
         const imgProps = pdf.getImageProperties(imgData);
-        const ratio = imgProps.height / imgProps.width;
-        const newImgHeight = pdfWidth * ratio;
+        // Calcula a altura da imagem redimensionada para caber na largura do PDF, mantendo a proporção
+        const newImgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        const newImgWidth = pdfWidth; // A imagem ocupará toda a largura do PDF
 
-        let position = 0; // Posição vertical para adicionar a imagem
-        let heightLeft = newImgHeight; // Altura restante da imagem a ser adicionada
+        let position = 0;
+        let heightLeft = newImgHeight;
 
-        // Adiciona a primeira parte da imagem
-        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, newImgHeight);
-        heightLeft -= pdfHeight; // Subtrai a altura de uma página A4
+        pdf.addImage(imgData, 'PNG', 0, position, newImgWidth, newImgHeight);
+        heightLeft -= pdfHeight;
 
-        // Adiciona novas páginas se a imagem for mais alta que uma página A4
         while (heightLeft > 0) {
-            position = position - pdfHeight; // Move a "janela de visualização" da imagem para cima
+            position -= pdfHeight; // Para a próxima página, a imagem é "puxada para cima"
             pdf.addPage();
-            pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, newImgHeight);
+            pdf.addImage(imgData, 'PNG', 0, position, newImgWidth, newImgHeight);
             heightLeft -= pdfHeight;
         }
 
