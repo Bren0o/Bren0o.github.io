@@ -1,4 +1,4 @@
-// script.js
+// script.js (SEM MUDANÇAS RECENTES NECESSÁRIAS PARA ESTE PROBLEMA ESPECÍFICO DE ALINHAMENTO)
 
 document.addEventListener('DOMContentLoaded', function() {
     const botaoGerar = document.getElementById('botaoGerarPdf');
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function gerarPDF() {
     const elementoCurriculo = document.getElementById('conteudo-curriculo');
-    const headerParaPdf = document.querySelector('.header-para-pdf'); // Seleciona o header do PDF
+    const headerParaPdf = document.querySelector('.header-para-pdf');
 
     if (!elementoCurriculo) {
         console.error("Elemento com ID 'conteudo-curriculo' não encontrado.");
@@ -20,7 +20,6 @@ function gerarPDF() {
     }
     if (!headerParaPdf) {
         console.error("Elemento com classe '.header-para-pdf' não encontrado. O título não aparecerá no PDF.");
-        // Não é um erro fatal para a geração, mas o PDF não terá o header.
     }
 
     // Tornar o header do PDF visível para a captura
@@ -33,15 +32,13 @@ function gerarPDF() {
         scale: 2,
         useCORS: true,
         logging: true,
-        backgroundColor: '#E6E6E6', // Fundo creme do canvas
-        // Deixar html2canvas tentar detectar as dimensões do elementoCurriculo
-        // já que agora ele contém o header-para-pdf visível.
-        // É importante que #conteudo-curriculo não tenha overflow hidden que corte conteúdo.
-        // As opções width/height/windowWidth/windowHeight podem ser re-adicionadas se houver cortes.
+        backgroundColor: '#E6E6E6',
+        // Permitir que o html2canvas determine as dimensões do #conteudo-curriculo
+        // que agora tem o headerParaPdf visível e ambos os filhos (header e main)
+        // são dimensionados por max-width e margin: auto.
     };
 
     html2canvas(elementoCurriculo, options).then(canvas => {
-        // Ocultar o header do PDF novamente após a captura
         if (headerParaPdf) {
             headerParaPdf.classList.remove('mostrar-para-pdf');
             headerParaPdf.classList.add('oculto-na-pagina');
@@ -78,7 +75,6 @@ function gerarPDF() {
         pdf.save('Curriculo_Breno_Caldas.pdf');
 
     }).catch(error => {
-        // Ocultar o header do PDF em caso de erro também
         if (headerParaPdf) {
             headerParaPdf.classList.remove('mostrar-para-pdf');
             headerParaPdf.classList.add('oculto-na-pagina');
