@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio - Breno Caldas de Sousa</title>
+    <title>Portfólio - Breno Caldas</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header da página web - com o botão, SEMPRE VISÍVEL NA PÁGINA -->
     <header id="header-pagina-web-visivel">
         <h1>Breno Caldas</h1>
         <p>Análise e Desenvolvimento de Sistemas | Assessor de Gestão</p>
@@ -15,14 +16,17 @@
         </button>
     </header>
 
+    <!-- Container principal para o conteúdo DO PDF -->
     <div id="pagina-container-para-pdf">
+
+        <!-- Header QUE APARECERÁ NO PDF (sem botão) - INICIALMENTE OCULTO NA PÁGINA -->
         <div class="header-conteudo-pdf oculto-na-pagina">
             <h1>Breno Caldas</h1>
             <p>Análise e Desenvolvimento de Sistemas | Assessor de Gestão</p>
         </div>
 
+        <!-- Conteúdo principal do currículo -->
         <main id="main-content">
-            <!-- SEU CONTEÚDO DO CURRÍCULO AQUI -->
             <section id="sobre-mim">
                 <h2>Sobre Mim</h2>
                 <p>Olá! Sou Breno, tenho 23 anos e sou apaixonado por tecnologia e análise de dados. Atualmente, busco aplicar e expandir meus conhecimentos em Análise e Desenvolvimento de Sistemas.</p>
@@ -35,6 +39,7 @@
                     <li><strong>Contato:</strong> (11) 9 4584-1457</li>
                 </ul>
             </section>
+
             <section id="formacao">
                 <h2>Formação Acadêmica</h2>
                 <ul>
@@ -47,6 +52,7 @@
                     <li>Informática Básica</li>
                 </ul>
             </section>
+
             <section id="experiencia">
                 <h2>Experiência Profissional</h2>
                 <div class="job">
@@ -65,6 +71,7 @@
                     <p>Funções: Suporte administrativo, organização de documentos, atendimento e rotinas de escritório, prestando serviço para a Grand Brasil.</p>
                 </div>
             </section>
+
             <section id="habilidades">
                 <h2>Habilidades</h2>
                 <ul>
@@ -77,12 +84,10 @@
                 </ul>
             </section>
         </main>
-
-        <!-- PÉ CREME PARA O PDF -->
-        <div class="pe-creme-pdf"></div>
-
+        <!-- O <div class="pe-creme-pdf"></div> foi removido. O padding-bottom do #pagina-container-para-pdf cuidará do espaço creme. -->
     </div> <!-- Fim do #pagina-container-para-pdf -->
 
+    <!-- Bloco inferior azul -->
     <div class="bloco-inferior-azul">
         <nav class="linktree">
             <h2>Meus Links</h2>
@@ -94,7 +99,8 @@
         <footer>
             <p>© 2024 Breno Caldas. Todos os direitos reservados.</p>
         </footer>
-    </div>
+    </div> <!-- Fim do .bloco-inferior-azul -->
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
