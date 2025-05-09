@@ -16,33 +16,33 @@ body {
 header {
     background: #1E2F4B; /* COR_AZUL_ESCURO_TITULO */
     color: white; /* COR_DEMAIS_INFOS - para texto no header */
-    padding: 1.5rem 0; /* Aumentei um pouco o padding */
+    padding: 1.5rem 0;
     text-align: center;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2.8rem; /* Aumentei um pouco */
+    font-size: 2.8rem;
 }
 
 header p {
-    font-size: 1.3rem; /* Aumentei um pouco */
+    font-size: 1.3rem;
     margin-top: 0.5rem;
 }
 
 nav.linktree {
     background: #1E2F4B; /* COR_AZUL_ESCURO_TITULO */
-    color: white; /* COR_DEMAIS_INFOS - para texto no linktree */
+    color: white; /* COR_DEMAIS_INFOS - para texto no linktree (como o H2) */
     padding: 1.5rem;
     text-align: center;
-    border-top: 2px solid #E6E6E6; /* Pequena separação visual */
+    border-top: 2px solid #E6E6E6;
     border-bottom: 2px solid #E6E6E6;
 }
 
 nav.linktree h2 {
     margin-top: 0;
     margin-bottom: 1rem;
-    font-size: 1.8rem; /* Aumentei um pouco */
+    font-size: 1.8rem;
 }
 
 nav.linktree ul {
@@ -55,34 +55,39 @@ nav.linktree ul li {
     margin: 0.5rem;
 }
 
-nav.linktree ul li a {
-    color: white; /* COR_DEMAIS_INFOS */
-    text-decoration: none;
-    padding: 0.7rem 1.5rem; /* Aumentei o padding do botão */
-    border: 2px solid white; /* Borda mais grossa */
-    border-radius: 8px; /* Bordas mais arredondadas */
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-weight: bold;
+/* Estilos para os links da seção "linktree" - CORRIGIDO */
+nav.linktree ul li a,
+nav.linktree ul li a:link,  /* Para links não visitados */
+nav.linktree ul li a:visited { /* Para links visitados */
+    color: white; /* Cor do texto do link para branco */
+    text-decoration: none; /* Remove o sublinhado padrão */
+    padding: 0.7rem 1.5rem; /* Padding para dar forma de botão */
+    border: 2px solid white; /* Borda branca ao redor do link */
+    border-radius: 8px; /* Bordas arredondadas */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave para o hover */
+    font-weight: bold; /* Texto em negrito */
 }
 
-nav.linktree ul li a:hover {
-    background-color: white; /* COR_DEMAIS_INFOS */
-    color: #1E2F4B; /* COR_AZUL_ESCURO_TITULO no hover */
+/* Estilo para quando o mouse está sobre o link ou o link tem foco (para acessibilidade) */
+nav.linktree ul li a:hover,
+nav.linktree ul li a:focus {
+    background-color: white; /* Fundo do link fica branco */
+    color: #1E2F4B;       /* Texto do link fica azul escuro (COR_AZUL_ESCURO_TITULO) */
 }
 
 main {
     padding: 25px;
     max-width: 900px;
-    margin: 30px auto; /* Aumentei a margem */
+    margin: 30px auto;
     background-color: white; /* COR_DEMAIS_INFOS - Fundo branco para o conteúdo principal */
-    box-shadow: 0 0 15px rgba(0,0,0,0.15); /* Sombra um pouco mais pronunciada */
-    border-radius: 8px; /* Bordas arredondadas para o container principal */
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    border-radius: 8px;
 }
 
 section {
-    margin-bottom: 2.5rem; /* Aumentei o espaçamento */
+    margin-bottom: 2.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px dashed #cccccc; /* Linha tracejada mais sutil */
+    border-bottom: 1px dashed #cccccc;
 }
 
 section:last-child {
@@ -92,10 +97,10 @@ section:last-child {
 /* Títulos das seções principais */
 h2 {
     color: #1E2F4B; /* COR_AZUL_ESCURO_TITULO */
-    border-bottom: 3px solid #1E2F4B; /* Borda mais grossa e da cor principal */
+    border-bottom: 3px solid #1E2F4B;
     padding-bottom: 0.5rem;
     margin-bottom: 1.5rem;
-    font-size: 2rem; /* Aumentei um pouco */
+    font-size: 2rem;
 }
 
 .job {
@@ -111,7 +116,7 @@ h2 {
 .job p {
     margin-top: 0.4rem;
     margin-bottom: 0.4rem;
-    color: #555; /* Cor um pouco mais clara para o texto descritivo do job */
+    color: #555;
 }
 
 ul {
@@ -121,11 +126,11 @@ ul {
 
 /* Habilidades com um estilo diferente */
 #habilidades ul li {
-    background-color: #f0f0f0; /* Fundo levemente cinza para cada item */
+    background-color: #f0f0f0;
     margin-bottom: 8px;
     padding: 8px 12px;
     border-radius: 5px;
-    border-left: 4px solid #1E2F4B; /* Detalhe azul à esquerda */
+    border-left: 4px solid #1E2F4B;
 }
 
 
@@ -149,13 +154,15 @@ footer {
         display: block;
         margin: 0.8rem 0;
     }
-    nav.linktree ul li a {
-        display: block; /* Faz o botão ocupar a largura toda */
+    nav.linktree ul li a,
+    nav.linktree ul li a:link,
+    nav.linktree ul li a:visited {
+        display: block; /* Faz o botão ocupar a largura toda em telas pequenas */
     }
     main {
         padding: 15px;
         margin: 15px;
-        border-radius: 0; /* Remove borda arredondada em telas pequenas */
+        border-radius: 0;
     }
     h2 {
         font-size: 1.8rem;
